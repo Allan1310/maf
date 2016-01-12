@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.indexdef.dao.BcmMenuDao">
+    
+	<sql id="bcmMenuColumns">
+		a.id AS "id",
+		a.menu_id AS "menuId",
+		a.menu_show AS "menuShow",
+		a.menu_show_type AS "menuShowType",
+		a.menu_expand_type AS "menuExpandType",
+		a.menu_reload_type AS "menuReloadType",
+		a.menu_hide_type AS "menuHideType",
+		a.menu_close_type AS "menuCloseType",
+		a.model_color As "modelColor",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		b.name AS "menu.name",
+		b.href AS "menu.href"
+	</sql>
+	
+	<sql id="bcmMenuJoins">
+		left join sys_menu b on a.menu_id=b.id
+	</sql>
+    
+	<select id="get" resultType="BcmMenu">
+		SELECT 
+			<include refid="bcmMenuColumns"/>
+		FROM index_menu a
+		<include refid="bcmMenuJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BcmMenu">
+		SELECT 
+			<include refid="bcmMenuColumns"/>
+		FROM index_menu a
+		<include refid="bcmMenuJoins"/>
+		<where>
+			
+			<if test="menuId != null and menuId != ''">
+				AND a.menu_id = #{menuId}
+			</if>
+			<if test="menu!= null and menu != ''">
+				<if test="menu.name != null and menu.name != ''">
+					AND b.name LIKE concat('%',#{menu.name},'%')
+				</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BcmMenu">
+		SELECT 
+			<include refid="bcmMenuColumns"/>
+		FROM index_menu a
+		<include refid="bcmMenuJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO index_menu(
+			id,
+			menu_id,
+			menu_show,
+			menu_show_type,
+			menu_expand_type,
+			menu_reload_type,
+			menu_hide_type,
+			menu_close_type,
+			model_color,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks
+		) VALUES (
+			#{id},
+			#{menuId},
+			#{menuShow},
+			#{menuShowType},
+			#{menuExpandType},
+			#{menuReloadType},
+			#{menuHideType},
+			#{menuCloseType},
+			#{modelColor},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE index_menu SET 	
+			menu_id = #{menuId},
+			menu_show = #{menuShow},
+			menu_show_type = #{menuShowType},
+			menu_expand_type = #{menuExpandType},
+			menu_reload_type = #{menuReloadType},
+			menu_hide_type = #{menuHideType},
+			menu_close_type = #{menuCloseType},
+			model_color=#{modelColor},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM index_menu
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

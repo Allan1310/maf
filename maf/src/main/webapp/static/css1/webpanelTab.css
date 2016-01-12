@@ -1,0 +1,333 @@
+/* CSS Document */
+
+html,body{
+		width:100%;
+		height:100%;
+		padding:0px;
+		margin:0px;	
+		overflow:auto;
+		font-family:"微软雅黑";
+		font-size:14px;
+	}
+	h3{
+		padding:0px;
+		margin:0px;
+	}
+	.table-content{
+		width:calc(100% - 160px);
+		width:-webkit-calc(100% - 160px);
+		width:-moz-calc(100% - 160px);
+		min-width:700px;
+		margin:0 auto;
+		height:100%;
+	/*	background-color:#3C9;*/
+	}
+	.error-message {
+		margin-top:20px;
+		width:100%;
+		min-height:40px;
+		background-color:#ddd;
+		border-radius:10px;
+		position:relative;
+	
+	}
+	.error-message .error-close{
+		top:-8px;
+		right:-8px;
+		position:absolute;
+		height:20px;
+		width:20px;
+		border:1px solid #000000;
+		border-radius:20px;
+		text-align:center;
+		cursor:pointer;
+	
+	}
+	.error-close:hover{
+		border-style:outset;
+	}
+	.error-message .error-single{
+		padding:0px 0 0 15px;
+		width:100%;
+		line-height:26px;
+	}
+	.error-message .error-single,.error-single a{
+		color:red;
+	}
+	.error-single a{
+		text-decoration:none;
+	}
+	.error-single a:hover{
+		cursor:pointer;
+		text-decoration:underline;
+	}
+	.table-title{
+		width:100%;
+		height:42px;
+		line-height:42px;
+		text-align:center;
+		font-size:20px;
+		color:#0f4f7d;
+	}
+	.table-content .hide{
+		display:none;
+	}
+	.table-groups{
+		margin:21px 0;
+		width:100%;
+		height:auto;
+		position:relative;
+		overflow:hidden;
+	}
+	.table-groups .groups-title{
+		width:100%;
+		min-height:27px;
+		/*border:1px solid #cdcdcd;*/
+		margin-bottom:14px;
+		overflow:hidden;
+	}
+	.table-groups .title-seq{
+		float:left;
+		width:40px;
+		line-height:1.2;
+		color:#0071be;
+		 font-size:28px;
+		font-family:"宋体";
+		
+	}
+	.table-groups .title-bg{
+		float:left;
+		width:calc(100% - 2px);
+		width:-webkit-calc(100% - 2px);
+		width:-moz-calc(100% - 2px);
+		overflow:hidden;
+		border:1px solid #cdcdcd;
+	}
+	.table-groups .bg{
+		float:left;
+		color:#ffffff;
+/* 		font-size:22px; */
+		line-height:1.5;
+	}
+	.table-groups .bg-height{
+		min-height:27px;
+	}
+	.table-groups .font-bg{
+		max-width:calc(100% - 220px);
+		max-width:-webkit-calc(100% - 220px);	
+		padding:0 10px;
+		background:url(../img/table-bg.png);
+	}
+	.table-groups .point-bg{
+		width:32px;
+		background:url(../img/point-bg_01.png) top left no-repeat;
+	}
+	.table-groups .point-big-bg{
+		margin-left:0px;
+		width:62px;
+		height:60px;
+		background:url(../img/point-bg_01.png) top left no-repeat;
+		background-size:100%;
+	}
+	.table-groups .line-bg{
+		background:url(../img/line-bg.png) bottom left repeat-x;
+		color:#ffffff;
+		/* font-size:22px; */
+		line-height:1.5;
+	}
+	.table-groups .line-big-bg{
+		background:url(../img/line-bg.png) bottom left repeat-x;
+		color:#ffffff;
+		height:66px;
+		/* font-size:22px; */
+		line-height:1.5;
+	}
+	table{
+		border-top:1px solid #cdcdcd;
+		border-left:1px solid #cdcdcd;;
+		height:auto;
+	}
+	td{
+		border-right:1px solid #cdcdcd;
+		border-bottom:1px solid #cdcdcd;
+	}
+	.basic-info{
+		height:40px;
+	}
+	.basic-info td{
+		padding:0 10px;
+		text-align:right;
+		/* font-size:22px; */
+	}
+	.basic-info .label{
+		width:20%;
+	}
+	.basic-info .label-input{
+		width:30%;
+		line-height:30px;
+	}
+	.basic-info input{
+		width:100%;
+		line-height:30px;
+		text-indent:1em;
+		height:30px;
+		padding:0px;
+		margin-bottom:0px;
+	}
+	.basic-info .label-check{
+		text-indent:20px;
+		text-align:left;
+		width:25%;
+	}
+	.basic-info .label-check-groups{
+		width:75%;
+	}
+	.basic-info .label-check input,.basic-info .label-check-groups input,.basic-info .label-erae-check input{
+		width:16px;
+		height:16px;
+		margin-right:8px;
+	}
+	.groupsel .groupsel-check{
+		float:left;
+		min-width:180px;
+		text-align:left;
+	}
+	.basic-info .date-input{
+		width:40%;
+	}
+	.basic-info .date-label{
+		width:20%;
+		text-align:center;
+	}
+	.basic-info .label-erae{
+		width:20%;
+		text-align:center;
+	}
+	.basic-info .label-erae-check{
+		width:20%;
+		text-align:left;
+	}
+	.basic-info .label-content{
+		width:60%;
+		text-align:left;
+	}
+	.basic-info .data-textarealabels{
+		width:20%;
+		text-align:center;
+	}
+	.basic-info .data-textarea{
+		width:80%;
+		text-align:center;
+	}
+	.data-textarea textarea{
+		width:100%;
+		/* height:100%; */
+		padding:0px;
+		margin:3px 0;
+	}
+	.mana-table{
+		border:1px solid #cdcdcd;
+		
+	}
+	.mana-table tr{
+		height:60px;
+	}
+	.add-mana-table tr{
+		height:30px;
+	}
+	.mana-table td{
+		text-align:center;
+		border:none;
+	}
+	.mana-table .mana-td{
+		border-right:1px solid #cdcdcd;
+	}
+	.mana-button{
+		margin:16px 0;
+		cursor:pointer;
+		width:70px;
+		height:45px;
+		background:url(../img/images/btn_add.png) no-repeat;
+	}
+	.mana-button:active{
+		opacity:0.5;
+	}
+	.mana-warning{
+		color:#ff0000;
+		font-size:18px;
+		width:calc(100% - 2px);
+		width:-webkit-calc(100% - 2px);
+		width:-moz-calc(100% - 2px);
+		height:86px;
+		line-height:86px;
+		text-indent:25px;
+		text-align:left;
+		border:1px #cdcdcd solid;
+	}
+	.mana-table input,.mana-table select{
+		width:90%;
+	}
+	.mana-table input{
+		height:17px;
+		margin-bottom:0px;
+	}
+	.mana-table select{
+		height:27px;
+		margin-bottom:0px;
+	}
+	.mana-table input[type='button']{
+		height:26px;
+	}
+	.basic-info .data-labels{
+		width:24%;
+		text-align:center;
+	}
+	.basic-info .data-label{
+		width:19%;
+		text-align:center;
+	}
+	.btns{
+		width:100%;
+		height:80px;
+		margin-bottom:50px;
+	}
+	.btns .btns-layout{
+		float:left;
+		width:50%;
+		height:58px;
+		position:relative;
+	}
+	.btns .closeonly{
+		width:100%;
+	}
+	.btns .btn-submit{
+		cursor:pointer;
+		right:50px;
+		top:5px;
+		width:288px;
+		height:53px;
+		position:absolute;
+		background:url(../img/images/btn-table_02.png) left top no-repeat;
+	}
+	.btns .btn-close{
+		cursor:pointer;
+		left:50px;
+		top:5px;
+		width:288px;
+		height:53px;
+		position:absolute;
+		background:url(../img/images/btn-table_05.png) right top no-repeat;;
+	}
+	.btns .closeonly .btn-close{
+		left:50%;
+		margin-left:-144px;
+	
+	}
+	.submit a:active{
+		opacity:0.5;
+		outline: none;
+	}
+	.closed a:active{
+		opacity:0.5;
+		outline: none;
+	}

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.item.dao.ItemPathDao">
+    
+    	<sql id="itemPathColumns">
+		a.id AS "id",
+		a.item_name AS "itemName",
+		a.item_id AS "itemId",
+		a.item_path AS "itemPath",
+		a.expression AS "expression",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+    <sql id="itemPathJoins">
+    
+    </sql>
+    
+    <sql id="userJoins">
+		LEFT JOIN sys_user_role ur ON ur.user_id = a.id
+        LEFT JOIN sys_role r ON r.id = ur.role_id
+    </sql>
+    
+	<select id="get" resultType="ItemPath">
+		SELECT 
+			<include refid="itemPathColumns"/>
+		FROM item_path a
+			<include refid="itemPathJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ItemPath">
+		SELECT 
+			<include refid="itemPathColumns"/>
+		FROM item_path a
+			<include refid="itemPathJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
+		<if test="itemPath != null and itemPath != ''">
+				AND a.item_path like CONCAT('%',#{itemPath},'%')
+		</if>
+		<if test="itemName != null and itemName != ''">
+				AND a.item_name like CONCAT('%',#{itemName},'%')
+		</if>
+		<if test="expression != null and expression != ''">
+				AND a.expression like CONCAT('%',#{expression},'%')
+		</if>
+		${sqlMap.af}
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ItemPath">
+		SELECT 
+			<include refid="itemPathColumns"/>
+		FROM item_path a
+			<include refid="itemPathJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
+		ORDER  a.update_date DESC
+	</select>
+	
+	
+	<insert id="insert">
+		INSERT INTO item_path(
+			id, 
+			item_name, 
+			item_id,
+			item_path,
+			expression, 
+			create_by, 
+			create_date, 
+			update_by, 
+			update_date, 
+			remarks, 
+			del_flag
+		) VALUES (
+			#{id}, 
+			#{itemName}, 
+			#{itemId},
+			#{itemPath},
+			#{expression},   
+			#{createBy.id}, 
+			#{createDate}, 
+			#{updateBy.id}, 
+			#{updateDate}, 
+			#{remarks}, 
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE item_path SET 
+			item_name = #{itemName}, 
+			item_id = #{itemId}, 
+			item_path = #{itemPath}, 
+			expression = #{expression}, 
+			update_by = #{updateBy.id}, 
+			update_date = #{updateDate}, 
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE item_path SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	
+</mapper>

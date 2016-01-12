@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.cm.dao.CmAuditTrackDao">
+    
+	<sql id="cmAuditTrackColumns">
+		a.id AS "id",
+		a.audit_id AS "auditId",
+		a.question AS "question",
+		a.ci_id AS "ciId",
+		a.ci_name AS "ciName",
+		a.duty_officer AS "dutyOfficer.id",
+		a.solve_status AS "solveStatus",
+		a.plan_solve_time AS "planSolveTime",
+		a.reality_solve_time AS "realitySolveTime",
+		a.status AS "status",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="cmAuditTrackJoins">
+	</sql>
+    
+	<select id="get" resultType="CmAuditTrack">
+		SELECT 
+			<include refid="cmAuditTrackColumns"/>
+			,u.name AS "dutyOfficer.name"
+		FROM cm_audit_track a
+		JOIN sys_user u ON u.id = a.duty_officer
+		<include refid="cmAuditTrackJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CmAuditTrack">
+		SELECT 
+			<include refid="cmAuditTrackColumns"/>
+		FROM cm_audit_track a
+		<include refid="cmAuditTrackJoins"/>
+		<where>
+			WHERE a.id = #{id}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CmAuditTrack">
+		SELECT 
+			<include refid="cmAuditTrackColumns"/>
+		FROM cm_audit_track a
+		<include refid="cmAuditTrackJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cm_audit_track(
+			id,
+			audit_id,
+			question,
+			ci_id,
+			ci_name,
+			duty_officer,
+			solve_status,
+			plan_solve_time,
+			reality_solve_time,
+			status,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{auditId},
+			#{question},
+			#{ciId},
+			#{ciName},
+			#{dutyOfficer.id},
+			#{solveStatus},
+			#{planSolveTime},
+			#{realitySolveTime},
+			#{status},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cm_audit_track SET 	
+			audit_id = #{auditId},
+			question = #{question},
+			ci_id = #{ciId},
+			ci_name = #{ciName},
+			duty_officer = #{dutyOfficer.id},
+			solve_status = #{solveStatus},
+			plan_solve_time = #{planSolveTime},
+			reality_solve_time = #{realitySolveTime},
+			status = #{status},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM cm_audit_track
+		WHERE id = #{id}
+	</update>
+	
+	<select id="findListById" resultType="CmAuditTrack">
+		SELECT 
+			<include refid="cmAuditTrackColumns"/>
+			,u.name AS "dutyOfficer.name"
+		FROM cm_audit_track a
+		JOIN sys_user u ON u.id = a.duty_officer
+		<include refid="cmAuditTrackJoins"/>
+		WHERE a.audit_id = #{auditId}
+		order by a.update_date asc
+	</select>
+</mapper>

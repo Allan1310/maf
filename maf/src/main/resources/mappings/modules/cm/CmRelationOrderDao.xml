@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.cm.dao.CmRelationOrderDao">
+    
+	<sql id="cmRelationOrderColumns">
+		a.id AS "id",
+		a.ci_id AS "ciInstance.id",
+		a.order_id AS "orderId",
+		a.order_type AS "orderType",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="cmRelationOrderJoins">
+	</sql>
+    
+	<select id="get" resultType="CmRelationOrder">
+		SELECT 
+			<include refid="cmRelationOrderColumns"/>
+		FROM cm_relation_order a
+		<include refid="cmRelationOrderJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CmRelationOrder">
+		SELECT 
+			<include refid="cmRelationOrderColumns"/>
+			,b.ci_number AS "ciInstance.ciNumber"
+		FROM cm_relation_order a
+		<include refid="cmRelationOrderJoins"/>
+		left join cm_ci_instance b on a.ci_id = b.id
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		<if test="ciInstance !=null and ciInstance !='' ">
+			AND a.ci_id = #{ciInstance.id}
+		</if>
+			
+		</where>
+		<if test="orderType !=null and orderType!='' ">
+			AND a.order_type = #{orderType}
+		</if>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CmRelationOrder">
+		SELECT 
+			<include refid="cmRelationOrderColumns"/>
+		FROM cm_relation_order a
+		<include refid="cmRelationOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cm_relation_order(
+			id,
+			ci_id,
+			order_id,
+			order_type,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{ciInstance.id},
+			#{orderId},
+			#{orderType},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cm_relation_order SET 	
+			ci_id = #{ciInstance.id},
+			order_id = #{orderId},
+			order_type = #{orderType},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE cm_relation_order SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

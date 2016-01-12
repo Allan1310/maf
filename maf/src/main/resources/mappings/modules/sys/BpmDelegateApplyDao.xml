@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.sys.dao.BpmDelegateApplyDao">
+    
+	<sql id="bpmDelegateApplyColumns">
+		a.id AS "id",
+		a.apply_user AS "applyUser.id",
+		a.assignee AS "assigneeUser.id",
+		a.start_time AS "startTime",
+		a.end_time AS "endTime",
+		a.template_id AS "templateId",
+		a.status AS "status",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="bpmDelegateApplyJoins">
+	</sql>
+    
+	<select id="get" resultType="BpmDelegateApply">
+		SELECT 
+			<include refid="bpmDelegateApplyColumns"/>
+			,u.name AS "applyUser.name"
+			,r.name AS "assigneeUser.name"
+		FROM bpm_delegate_apply a
+		JOIN sys_user u ON u.id=a.apply_user
+		JOIN sys_user r ON r.id=a.assignee
+		<include refid="bpmDelegateApplyJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BpmDelegateApply">
+		SELECT 
+			<include refid="bpmDelegateApplyColumns"/>
+			,u.name AS "applyUser.name"
+			,r.name AS "assigneeUser.name"
+		FROM bpm_delegate_apply a
+		<include refid="bpmDelegateApplyJoins"/>
+		JOIN sys_user u ON u.id=a.apply_user
+		JOIN sys_user r ON r.id=a.assignee
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<if test="status !=null and status!= '' ">
+			and a.status = #{status}
+		</if>
+		<if test="applyUser != null ">
+			and a.apply_user = #{applyUser.id}
+		</if>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BpmDelegateApply">
+		SELECT 
+			<include refid="bpmDelegateApplyColumns"/>
+		FROM bpm_delegate_apply a
+		<include refid="bpmDelegateApplyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>	
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO bpm_delegate_apply(
+			id,
+			apply_user,
+			assignee,
+			start_time,
+			end_time,
+			template_id,
+			status,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{applyUser.id},
+			#{assigneeUser.id},
+			#{startTime},
+			#{endTime},
+			#{templateId},
+			#{status},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE bpm_delegate_apply SET 	
+			apply_user = #{applyUser.id},
+			assignee = #{assigneeUser.id},
+			start_time = #{startTime},
+			end_time = #{endTime},
+			template_id = #{templateId},
+			status = #{status},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE bpm_delegate_apply SET 
+			del_flag = #{DEL_FLAG_DELETE},
+			status = '1'
+		WHERE id = #{id}
+	</update>
+	
+	<select id="getDelegateInfo" resultType="BpmDelegateApply">
+		SELECT 
+			<include refid="bpmDelegateApplyColumns"/>
+			,u.login_name AS "applyUser.loginName"
+			,r.login_name AS "assigneeUser.loginName"
+		FROM bpm_delegate_apply a
+		JOIN sys_user u ON u.id=a.apply_user
+		JOIN sys_user r ON r.id=a.assignee
+		<include refid="bpmDelegateApplyJoins"/>
+		WHERE a.status = '0'
+		AND a.del_flag = '0'
+		AND a.apply_user = #{applyUserId}
+		AND a.end_time &gt; #{nowTime}
+		AND a.start_time &lt;= #{nowTime}
+		<if test="templateId != null and templateId != ''">
+			AND a.template_id Like
+				<if test="dbName == 'mssql'">'%'+#{templateId}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{templateId},'%')</if>
+		</if>
+	</select>
+	
+	<select id="findDelegateApply" resultType="BpmDelegateApply">
+		SELECT 
+			<include refid="bpmDelegateApplyColumns"/>
+		FROM bpm_delegate_apply a
+		<include refid="bpmDelegateApplyJoins"/>
+		WHERE a.status = '0'
+		AND a.del_flag = '0'
+		AND a.end_time &lt;= #{endTime}
+	</select>
+	
+</mapper>

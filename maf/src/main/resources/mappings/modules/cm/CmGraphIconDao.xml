@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.cm.dao.CmGraphIconDao">
+    
+	<sql id="cmGraphIconColumns">
+		a.id AS "id",
+		a.icon_name AS "iconName",
+		a.icon_file AS "iconFile",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="cmGraphIconJoins">
+	</sql>
+    
+	<select id="get" resultType="CmGraphIcon">
+		SELECT 
+			<include refid="cmGraphIconColumns"/>
+		FROM cm_graph_icon a
+		<include refid="cmGraphIconJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CmGraphIcon">
+		SELECT 
+			<include refid="cmGraphIconColumns"/>
+		FROM cm_graph_icon a
+		<include refid="cmGraphIconJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<if test="iconName != null and iconName != ''">
+			AND a.icon_name Like
+				<if test="dbName == 'mssql'">'%'+#{iconName}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{iconName},'%')</if>
+		</if>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CmGraphIcon">
+		SELECT 
+			<include refid="cmGraphIconColumns"/>
+		FROM cm_graph_icon a
+		<include refid="cmGraphIconJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cm_graph_icon(
+			id,
+			icon_name,
+			icon_file,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{iconName},
+			#{iconFile},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cm_graph_icon SET 	
+			icon_name = #{iconName},
+			icon_file = #{iconFile},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE cm_graph_icon SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

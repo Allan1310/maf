@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.cm.dao.CmCiPropertyDao">
+    
+	<sql id="cmCiPropertyColumns">
+		a.id AS "id",
+		a.ci_id AS "ciId",
+		a.ci_version AS "ciVersion",
+		a.property_id AS "property.id",
+		a.property_value AS "propertyValue",
+		a.property_update_value AS "propertyUpdateValue",
+		a.handle AS "handle",
+		a.status AS "status",
+		a.handle_status AS "handleStatus",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="cmCiPropertyJoins">
+	</sql>
+    
+	<select id="get" resultType="CmCiProperty">
+		SELECT 
+			<include refid="cmCiPropertyColumns"/>
+		FROM cm_ci_property a
+		<include refid="cmCiPropertyJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CmCiProperty">
+		SELECT 
+			<include refid="cmCiPropertyColumns"/>
+		FROM cm_ci_property a
+		<include refid="cmCiPropertyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CmCiProperty">
+		SELECT 
+			<include refid="cmCiPropertyColumns"/>
+		FROM cm_ci_property a
+		<include refid="cmCiPropertyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cm_ci_property(
+			id,
+			ci_id,
+			ci_version,
+			property_id,
+			property_value,
+			property_update_value,
+			handle,
+			status,
+			handle_status,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{ciId},
+			#{ciVersion},
+			#{property.id},
+			#{propertyValue},
+			#{propertyUpdateValue},
+			#{handle},
+			#{status},
+			#{handleStatus},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cm_ci_property SET 	
+			ci_id = #{ciId},
+			ci_version = #{ciVersion},
+			property_id = #{property.id},
+			property_value = #{propertyValue},
+			property_update_value = #{propertyUpdateValue},
+			handle = #{handle},
+			status = #{status},
+			handle_status = #{handleStatus},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE cm_ci_property SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	<select id="findEntityByCiId" resultType="CmCiProperty">
+		SELECT 
+			<include refid="cmCiPropertyColumns"/>
+			,b.id AS "property.id"
+			,b.property_name AS "property.propertyName",
+			b.is_null AS "property.isNull",
+			b.data_type AS "property.dataType",
+			b.property_Type AS "property.propertyType",
+			b.ext1 AS "property.ext1",
+			b.ext2 AS "property.ext2"
+		FROM cm_ci_property a
+		left join cm_property_manage b on a.property_id = b.id
+		WHERE a.del_flag = '0'
+		and a.ci_id = #{ciId}
+		ORDER BY b.sort ASC
+	</select>
+	
+	<insert id="savePropertyHi">
+		INSERT into cm_ci_property_hi  
+		select * from cm_ci_property 
+		where ci_id = #{ciId}
+	</insert>
+	
+	<update id="updatePropertyHi">
+		UPDATE cm_ci_property_hi SET 
+		handle='0',
+		handle_status='0',
+		property_update_value=''
+		where ci_id = #{ciId}
+		and ci_version = #{ciVersion}
+	</update>
+	
+	<update id="delProperty">
+		UPDATE cm_ci_property SET 
+			del_flag = '1'
+		WHERE ci_id = #{ciId}
+		AND property_id = #{propertyId}
+	</update>
+	
+</mapper>

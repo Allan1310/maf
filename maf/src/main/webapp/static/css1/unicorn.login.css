@@ -1,0 +1,209 @@
+/**
+ * Unicorn Admin Template
+ * Diablo9983 -> diablo9983@gmail.com
+**/
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow:hidden;
+    font-family: "microsoft yahei";
+}
+body {
+    background-color: #ffffff;
+    padding: 0;
+    margin: 0;
+}
+
+.login_main{
+    width: 1100px;
+    overflow: hidden;
+    padding-top: 150px;
+    margin: 0px auto;
+    position:relative;
+}
+
+#loginbox {
+    width: 300px;
+    float: right;
+    position: relative;
+    z-index: 2;
+}
+#logo {
+    width: 100%;
+    height: 100px;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    text-align: center;
+    background-color: #ffffff;
+    z-index: 2;
+}
+#logo img {
+    margin: 0 auto;
+    display: block;
+}
+#loginbox {
+    height: 260px;
+	background: #ffffff;
+    box-shadow: 0 0 4px #000000;
+    border-radius: 7px;
+    overflow: hidden !important;
+    text-align: center;
+    position: relative;   
+}
+.login_main .header{
+	position:absolute;
+	top:100px;
+	width:300px;
+	right:0px;
+	z-index:201;	
+}
+#loginbox form{
+	width:100%;
+	height:100%;
+	position:absolute;
+	top:0;
+	left:0;
+}
+#loginbox p {
+    margin-top: 20px;
+    padding: 0 20px;
+}
+#loginbox p.title{
+    margin: 0px 0 10px 0;
+    padding: 0px;
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    background-color: #016ac3;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+#loginbox .form-actions {
+	padding: 14px 20px 15px;
+}
+#loginbox .form-actions .pull-left {
+	margin-top: 2px;
+}
+
+#loginbox form#loginform {
+	z-index: 200;
+}
+
+#loginbox form#recoverform {
+	z-index: 100;
+	opacity: 0;
+    display:none;
+}
+
+#loginbox form#recoverform .form-actions {
+    margin-top: 83px;
+}
+
+#loginbox form#recoverform .control-group {
+	margin: 23px 0;
+}
+
+.form-vertical, .form-actions {
+    margin-bottom: 0;
+}
+
+.input-prepend{position: relative; margin-bottom: 15px;}
+.input-prepend.yzm{width: 243px;}
+.input-prepend.yzm input{width: 148px;}
+.input-prepend input{
+    height: 34px;
+    line-height: 34px;
+    padding:0px 6px;
+    font-size: 14px;
+    font-weight: normal;
+    font-family: "microsoft yahei";
+    border-radius: 0px;
+    background-color: #e8e8e8;
+    background-image: none;
+    box-shadow: none;
+    color: #959595;
+    border: none;
+}
+.input-prepend .add-on{
+    height: 14px;
+    background: #bfbfbf;
+    line-height: 14px;
+    border: none;
+    border-radius: 0px;
+    padding: 10px 5px;
+    
+}
+.input-prepend .add-on i{
+	margin:0px;
+}
+.input-prepend .add-on:first-child{
+    border-radius: 0px;
+}
+
+.login_yzm{
+    width: 66px;
+    height: 25px;
+    position: absolute;
+    right: -40px;
+    top: 0px;
+    display: inline-block;
+    z-index: 99;
+    cursor: pointer;
+}
+.login_yzm img{
+    width: 100%;
+    height: auto;
+}
+.silder{
+    width: 100%;
+    height: 400px;
+    position: absolute;
+    left: 0;
+    top: 100px;
+    z-index: 1;
+    text-align: center;
+    overflow: hidden;
+}
+.silder ul{position: relative; width: 100%; height: 100%; display: block; margin: 0px;}
+.silder li{width: 100%; height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; position: absolute;}
+.silder li.one{background-image: url("../img/demo/s1.jpg")}
+/**.silder li.two{background-image: url("../img/demo/s2.jpg")}
+.silder li.three{background-image: url("../img/demo/s3.jpg")}
+.silder li.four{background-image: url("../img/demo/s4.jpg")}  */
+.video_index_head_page {
+    display: block;
+    height: 10px;
+    z-index: 9;
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+.copy_right{
+    width: 100%;
+    height: 40px;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 14px;
+}
+.btn.btn-warning{
+    background-image: none;
+    background-color: #ff932e;
+    box-shadow: none;
+    border: none;
+    border-radius: 0px;
+    width: 120px;
+    font-family: "microsoft yahei";
+}
+
+@media (max-width: 480px){
+    #logo, #loginbox {
+        width: 80%; 
+    }    
+}

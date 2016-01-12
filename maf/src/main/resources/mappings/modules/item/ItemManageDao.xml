@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.item.dao.ItemManageDao">
+    	
+	<sql id="itemManageColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.version AS "version",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+    <sql id="itemManageJoins">
+    
+    </sql>
+    
+    <sql id="userJoins">
+		LEFT JOIN sys_user_role ur ON ur.user_id = a.id
+        LEFT JOIN sys_role r ON r.id = ur.role_id
+    </sql>
+    
+	<select id="get" resultType="ItemManage">
+		SELECT 
+			<include refid="itemManageColumns"/>
+		FROM item_manage a
+			<include refid="itemManageJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ItemManage">
+		SELECT 
+			<include refid="itemManageColumns"/>
+		FROM item_manage a
+		<include refid="itemManageJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
+		<if test="name != null and name != ''">
+				AND a.name like CONCAT('%',#{name},'%')
+		</if>
+		${sqlMap.af}
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ItemManage">
+		SELECT 
+			<include refid="itemManageColumns"/>
+		FROM item_manage a
+		<include refid="itemManageJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
+		ORDER BY  a.update_date DESC
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO item_manage(
+			id, 
+			name, 
+			version, 
+			create_by, 
+			create_date, 
+			update_by, 
+			update_date, 
+			remarks, 
+			del_flag
+		) VALUES (
+			#{id}, 
+			#{name}, 
+			#{version}, 
+			#{createBy.id}, 
+			#{createDate}, 
+			#{updateBy.id}, 
+			#{updateDate}, 
+			#{remarks}, 
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE item_manage SET 
+			name = #{name}, 
+			version = #{version}, 
+			update_by = #{updateBy.id}, 
+			update_date = #{updateDate}, 
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE item_manage SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	
+</mapper>

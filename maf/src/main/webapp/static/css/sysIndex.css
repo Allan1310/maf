@@ -1,0 +1,305 @@
+.header{
+	width:100%;
+	height:88px;
+	background-image:url(../images/sysIndex/header_bg.png);
+	background-size:100% 100%;
+}
+.logo{
+	width:304px;
+	height:88px;
+	background-image:url(../img/logo_mid_1.png);
+	background-repeat:no-repeat;
+	background-position:center;
+	margin-left:10px;
+	float:left;
+}
+.headerMenu{
+	margin:0 30px;
+	height:88px;
+	float:left;
+}
+.headerMenu-item{
+	height:88px;
+	width:88px;
+	float:left;
+}
+.headerMenu-item:hover{
+	text-decoration: none;
+}
+.headerMenu-selected{
+	background-image:url(../images/sysIndex/selected.png);
+	background-repeat:no-repeat;
+}
+.line-first{
+	height:88px;
+	width:3px;
+	background-image:url(../images/sysIndex/line_first.png);
+	background-repeat:no-repeat;
+	background-position:bottom;
+	float:left;
+}
+.line-last{
+	height:88px;
+	width:7px;
+	background-image:url(../images/sysIndex/line_last.png);
+	background-repeat:no-repeat;
+	background-position:bottom;
+	float:left;
+}
+.menu-icon{
+	height:54px;
+	width:88px;
+	background-image:url(../images/sysIndex/icon/icon-cog.png);
+	background-repeat:no-repeat;
+	background-position:bottom;
+}
+.menu-text{
+	width:88px;
+	margin-top:4px;
+	font-size:14px;
+	text-align:center;
+	color:#FFFFFF;
+}
+.headerMenu-selected .menu-icon{
+	background-image:url(../images/sysIndex/icon/icon-cogAct.png);
+}
+.headerMenu-selected .menu-text{
+	color:#00ffe4;
+}
+.home-icon{
+	background-image:url(../images/sysIndex/icon/icon-home.png);
+}
+.headerMenu-selected .home-icon{
+	background-image:url(../images/sysIndex/icon/icon-homeAct.png);
+}
+.flag-icon{
+	background-image:url(../images/sysIndex/icon/icon-flag.png);
+}
+.headerMenu-selected .flag-icon{
+	background-image:url(../images/sysIndex/icon/icon-flagAct.png);
+}
+.camera-icon{
+	background-image:url(../images/sysIndex/icon/icon-binoculars.png);
+}
+.headerMenu-selected .camera-icon{
+	background-image:url(../images/sysIndex/icon/icon-binocularsAct.png);
+}
+.random-icon{
+	background-image:url(../images/sysIndex/icon/icon-shield.png);
+}
+.headerMenu-selected .random-icon{
+	background-image:url(../images/sysIndex/icon/icon-shieldAct.png);
+}
+.check-icon{
+	background-image:url(../images/sysIndex/icon/icon-check.png);
+}
+.headerMenu-selected .check-icon{
+	background-image:url(../images/sysIndex/icon/icon-checkAct.png);
+}
+.list-alt-icon{
+	background-image:url(../images/sysIndex/icon/icon-report.png);
+}
+.headerMenu-selected .list-alt-icon{
+	background-image:url(../images/sysIndex/icon/icon-reportAct.png);
+}
+
+
+.headerUser{
+	width:120px;
+	height:88px;
+	float:right;
+	margin-right:30px;
+}
+.help-content{
+	width:100px;
+	height:14px;
+	line-height:14px;
+	color:#FFFFFF;
+	background-image:url(../images/sysIndex/icon/help_icon.png);
+	background-repeat:no-repeat;
+	background-position:left;
+	margin-top:24px;
+	padding-left:20px;
+}
+.user-content{
+	width:80px;
+	height:23px;
+	background-image:url(../images/sysIndex/user_name.png);
+	background-repeat:no-repeat;
+	background-position:right;
+	margin-top:12px;
+	line-height:23px;
+	color:#d7d7d7;
+	padding-left:40px;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow: ellipsis;
+}
+
+.leftSide{
+	height:calc(100% - 88px);
+	height:-webkit-calc(100% - 88px);
+	height:-moz-calc(100% - 88px);
+	width:185px;
+	float:left;
+	background:#F0F9FD;
+}
+.leftTop{
+	height:40px;
+	width:100%;
+	background-image:url(../images/sysIndex/leftTop.png);
+	background-size:100% 100%;
+	color:#FFFFFF;
+	font-size:14px;
+	line-height:40px;
+}
+.leftTop-text{
+	float:left;
+	margin-left:10px;
+}
+.spread{
+	height:40px;
+	width:5px;
+	background-image:url(../images/sysIndex/spread.png);
+	background-repeat:no-repeat;
+	background-position:center;
+	float:right;
+	cursor:pointer;
+	display:none;
+}
+.leftArrow{
+	height:40px;
+	width:18px;
+	background-image:url(../images/sysIndex/left_arrow.png);
+	background-repeat:no-repeat;
+	background-position:center;
+	float:right;
+	margin-right:10px;
+	cursor:pointer;
+}
+.leftMenu{
+	width:calc(100% - 1px);
+	width:-webkit-calc(100% - 1px);
+	width:-moz-calc(100% - 1px);
+	height:calc(100% - 40px);
+	height:-webkit-calc(100% - 40px);
+	height:-moz-calc(100% - 40px);
+	overflow:hidden;
+	border-right:1px solid #B7D5DF;
+}
+.menuTree{
+	width:100%;
+	height:100%;
+}
+.leftMenu-item{
+	width:100%;
+	height:34px;
+	border-bottom:1px solid #B9CAD3;
+	background-color:#D4E7F0;
+	float:left;
+	color:#333333;
+	cursor:pointer;
+}
+.leftMenu .icon{
+	height:14px;
+	width:14px;
+	display:inline-block;
+	background-image:url(../images/sysIndex/icon/glyphicons-halflings.png);
+	background-repeat:no-repeat;
+	float:left;
+	margin-left:10px;
+	margin-top:10px;
+}
+.leftMenu-item>div{
+	height:34px;
+	line-height:34px;
+	float:left;
+	font-size:12px;
+	font-weight:bold;
+	margin-left:12px;
+}
+.leftMenu-item:hover{
+	background-color:#aad9ef;
+	color:#333333;
+}
+
+.subMenu{
+	width:100%;
+	display:none;
+	overflow:auto;
+}
+.subMenu-item{
+	width:100%;
+	height:30px;
+	overflow:hidden;
+	cursor:pointer;
+	color:#333333;
+	float:left;
+}
+.subMenu-item>i{
+	height:30px;
+	width:46px;
+	background-image:url(../images/sysIndex/icon/sub_icon.png);
+	background-repeat:no-repeat;
+	background-position:right;
+	display:inline-block;
+	float:left;
+}
+.subMenu-item>div{
+	margin-left:4px;
+	line-height:30px;
+	font-weight:bold;
+	float:left;
+}
+.subMenu-item:hover{
+	background-color:#3EAFE0;
+}
+.subMenu-selected{
+	background-color:#3EAFE0;
+	background-image:url(../images/sysIndex/icon/sub_icon_sel.png);
+	background-repeat:no-repeat;
+	background-position:right;
+	color:#FFFFFF;
+}
+.mainContent{
+	width:calc(100% - 185px);
+	width:-webkit-calc(100% - 185px);
+	width:-moz-calc(100% - 185px);
+	height: calc(100% - 88px);
+  	height: -webkit-calc(100% - 88px);
+  	height: -moz-calc(100% - 88px);
+	float:left;
+	overflow:hidden;
+}
+.mainTop{
+	width:100%;
+	height:39px;
+	background-color:#EDF6FA;
+	font-size:12px;
+	font-weight:bold;
+	border-bottom:1px solid #D7E4EA;
+}
+.mainLocation{
+	height:39px;
+	line-height:39px;
+	float:left;
+	margin-left:15px;
+}
+.tip-bottom{
+	background-image:url(../img/breadcrumb.png);
+	background-position:right;
+	background-repeat:no-repeat;
+	padding-right:10px;
+}
+.mainAddress{
+	height:39px;
+	line-height:39px;
+	float:right;
+	margin-right:35px;
+}
+.mainLast{
+	height:39px;
+	line-height:39px;
+	float:right;
+	margin-right:15px;
+}

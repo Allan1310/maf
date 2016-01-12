@@ -1,0 +1,207 @@
+/* CSS Document */
+
+html,body{
+		width:100%;
+		height:100%;
+		padding:0px;
+		margin:0px;
+	}
+	a{
+		text-decoration:none;
+	}
+	.nav-menu{
+		padding:16px;
+		width:auto;
+		height:auto;
+		width:calc(100% - 32px);
+		width:-webkit-calc(100% - 32px);
+		width:-moz-calc(100% - 32px);
+		height:calc(100% - 32px);
+		height:-webkit-calc(100% - 32px);
+		height:-moz-calc(100% - 32px);
+		/*background-color:#06C;*/
+		background-color:#ecf0f1;
+		position:relative;
+	}
+	.nav-menu-logo{
+		position:absolute;
+		width:570px;
+		height:498px;
+		right:0px;
+		bottom:0px;
+		background:url(../img/logo_grew.png) no-repeat !important;
+		z-index:10;
+	
+	}
+	.nav-menu .menu-groups{
+		float:left;
+		margin:16px 16px;
+		width:244px;
+		height:122px;
+		cursor:pointer;
+		border:1px outset #d6d6d6;
+		position:relative;
+		z-index:20;
+	}
+	.nav-menu .menu-groups:hover{
+		border:1px solid #d6d6d6;
+	}
+	.nav-menu .blue{
+		background-color:#1cb6ed;
+	}
+	.nav-menu .red{
+		background-color:#008cd6;
+	}
+	.nav-menu .white{
+		background-color:#d8d8d8;
+		border: 1px solid #d6d6d6;
+	}
+	.nav-menu .zi{
+		background-color:#f6ac1d;
+	}
+	.nav-menu .green{
+		background-color:#ff6c14;
+	}
+	.nav-menu .yellow{
+		background-color:#0157a8;
+	}
+	.nav-menu .grew{
+		background-color:#eb9600;
+	}
+	.nav-menu .other{
+		background-color:#e24d24;
+	}
+	.nav-menu .childColor{
+		background-color:#ffffff;
+	}
+	.nav-menu .menu-tools{
+		width:100%;
+		height:36px;
+		position:relative;
+	}
+	.nav-menu .menu-content{
+		width:100%;
+		height:86px;
+		position:relative;
+	}
+	.menu-tools .nextMenu{
+		position:absolute;
+		top:6px;
+		right:6px;
+		width:24px;
+		height:24px;
+		background:url(../img/nextMenu.png) no-repeat !important;
+	}
+	.menu-tools .lock-tool{
+		background:url(../img/lock.png) no-repeat !important;
+	}
+	.menu-content .img-con{
+		float:left;
+		height:48px;
+		width:50px;
+		margin:19px 0px 19px 29px;
+		position:relative;
+	}
+	.menu-content .font-con{
+		float:left;
+		height:100%;
+		width:165px;
+		text-align:center;
+		line-height:86px;
+		font-weight:bold;
+		font-size:18px;
+		font-family:"微软雅黑";
+	}
+	.menu-content .font-con {
+		color:#ffffff;
+	}
+	.white .menu-content .font-con {
+		color:#ffffff;
+	}
+	.childColor .menu-content .font-con {
+		color:#00acac;
+	}
+	.manipulation .menu-content .img-con{
+		height:46px;
+		width:52px;
+		margin:20px 0px 20px 27px;
+	}
+	.menu_infoSearch .menu-content .img-con,.auditService .menu-content .img-con{
+		height:50px;
+		width:50px;
+		margin:18px 0px 18px 29px;
+	}
+	.ediaServices .menu-content .img-con{
+		height:48px;
+		width:42px;
+		margin:19px 0px 19px 35px;
+	}
+	.exerciseCoordination .menu-content .img-con{
+		height:46px;
+		width:46px;
+		margin:20px 0px 20px 33px;
+	}
+	.suggestions .menu-content .img-con{
+		height:44px;
+		width:50px;
+		margin:21px 0px 21px 29px;
+	}
+	.otherServices .menu-content .img-con{
+		height:50px;
+		width:50px;
+		margin:18px 0px 18px 29px;
+	}
+	.blue .menu-tools{
+		background-color:#1cb6ed;
+	}
+	.red .menu-tools{
+		background-color:#008cd6;
+	}
+	.white .menu-tools{
+		background-color:#d8d8d8;
+	}
+	.zi .menu-tools{
+		background-color:#f6ac1d;
+	}
+	.green .menu-tools{
+		background-color:#ff6c14;
+	}
+	.yellow .menu-tools{
+		background-color:#0157a8;
+	}
+	.grew .menu-tools{
+		background-color:#eb9600;
+	}
+	.other .menu-tools{
+		background-color:#e24d24;
+	}
+	.childColor .menu-tools{
+		background-color:#00acac;
+	}
+	.equipment .img-con{
+		background:url(../img/menu_equipment.png) no-repeat;
+	}
+	.manipulation .img-con{
+		background:url(../img/menu_manipulation.png) no-repeat;
+	}
+	.auditService .img-con{
+		background:url(../img/menu_auditService.png) no-repeat;
+	}
+	.infoSearch .img-con{
+		background:url(../img/menu_infoSearch.png) no-repeat;
+	}
+	.ediaServices .img-con{
+		background:url(../img/menu_ediaServices.png) no-repeat;
+	}
+	.exerciseCoordination .img-con{
+		background:url(../img/menu_exerciseCoordination.png) no-repeat;
+	}
+	.suggestions .img-con{
+		background:url(../img/menu_suggestions.png) no-repeat;
+	}
+	.otherServices .img-con{
+		background:url(../img/menu_otherServices.png) no-repeat;
+	}
+	.childrenImg .img-con{
+		background:url(../img/child_Img.png) no-repeat;
+	}

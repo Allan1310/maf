@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="act" default="welcome">
+
+	<!-- properties from key value -->
+	<property name="designs" value="designs" />
+	<property name="deployments" value="deployments" />
+
+	<!-- 显示欢迎信息以及操作提示 -->
+	<target name="welcome">
+		<echo>Activiti打包程序，请输入命令后操作！</echo>
+	</target>
+
+	<!-- 协同办公-请假流程 -->
+	<target name="oa.leave">
+		<echo>打包流程定义：协同办公-请假流程</echo>
+		<copy file="${designs}/oa/leave/leave.bpmn" tofile="${designs}/oa/leave/leave.bpmn20.xml" />
+		<zip destfile="${deployments}/oa/leave/leave.bar" basedir="${designs}/oa/leave" update="true" includes="*.xml,*.png" />
+		<delete file="${designs}/oa/leave/leave.bpmn20.xml" />
+	</target>
+	
+	<!-- 协同办公-测试流程  自定义表单-->
+	<target name="oa.test_audit">
+		<echo>打包流程定义：协同办公-测试流程</echo>
+		<copy file="${designs}/oa/test_audit/test_audit.bpmn" tofile="${designs}/oa/test_audit/test_audit.bpmn20.xml" />
+		<zip destfile="${deployments}/oa/test_audit/test_audit.bar" basedir="${designs}/oa/test_audit" update="true" includes="*.xml,*.png" />
+		<delete file="${designs}/oa/test_audit/test_audit.bpmn20.xml" />
+	</target>
+	
+	<!-- 配置管理-配置项申请流程-->
+	<target name="cm.ci_apply">
+		<echo>打包流程定义：配置管理-配置项申请流程</echo>
+		<copy file="${designs}/cm/ci_apply/ciApply.bpmn" tofile="${designs}/cm/ci_apply/ciApply.bpmn20.xml" />
+		<zip destfile="${deployments}/cm/ci_apply/ciApply.bar" basedir="${designs}/cm/ci_apply" update="true" includes="*.xml,*.png" />
+		<delete file="${designs}/cm/ci_apply/ciApply.bpmn20.xml" />
+	</target>
+	
+	<!-- 配置管理-配置审计流程-->
+	<target name="cm.audit_apply">
+		<echo>打包流程定义：配置管理-配置审计流程</echo>
+		<copy file="${designs}/cm/audit_apply/auditApply.bpmn" tofile="${designs}/cm/audit_apply/auditApply.bpmn20.xml" />
+		<zip destfile="${deployments}/cm/audit_apply/auditApply.bar" basedir="${designs}/cm/audit_apply" update="true" includes="*.xml,*.png" />
+		<delete file="${designs}/cm/audit_apply/auditApply.bpmn20.xml" />
+	</target>
+
+	<!-- 作业管理-作业定义创建申请流程 -->
+	<target name="hm">
+			<echo>打包流程定义：作业管理-作业定义申请流程</echo>
+			<copy file="${designs}/hm/hmCreateAudit.bpmn" tofile="${designs}/hm/hmCreateAudit.bpmn.bpmn20.xml" />
+			<zip destfile="${deployments}/hm/hmCreateAudit.bar" basedir="${designs}/hm" update="true" includes="*.xml,*.png" />
+			<delete file="${designs}/hm/hmCreateAudit.bpmn20.xml" />
+	</target>
+	
+	<!-- 区域管理-权限申请 -->
+	<target name="rm_audit">
+			<echo>打包流程定义：区域管理-权限申请流程</echo>
+			<copy file="${designs}/rm/rm_audit/rm_Apply_audit.bpmn" tofile="${designs}/rm/rm_audit/rm_Apply_audit.bpmn.bpmn20.xml" />
+			<zip destfile="${deployments}/rm/rm_audit/rm_Apply_audit.bar" basedir="${designs}/rm/rm_audit" update="true" includes="*.xml,*.png" />
+			<delete file="${designs}/rm/rm_audit/rm_Apply_audit.bpmn20.xml" />
+	</target>
+	
+	<!-- 机房管理-访客申请流程-->
+		<target name="rm_vs">
+			<echo>打包流程定义：机房管理-访客申请流程</echo>
+			<copy file="${designs}/rm/rm_vs/rmVsApplicationInformation.bpmn" tofile="${designs}/rm/rm_vs/rmVsApplicationInformation.bpmn.bpmn20.xml" />
+			<zip destfile="${deployments}/rm/rm_vs/rmVsApplicationInformation.bar" basedir="${designs}/rm/rm_vs" update="true" includes="*.xml,*.png" />
+			<delete file="${designs}/rm/rm_vs/rmVsApplicationInformation.bpmn20.xml" />
+	</target>
+	<!-- 客户管理-客户信息录入申请流程 -->
+	<target name="cs">
+			<echo>打包流程定义：客户管理-客户信息录入申请流程</echo>
+			<copy file="${designs}/cs/csCustomAudit.bpmn" tofile="${designs}/cs/csCustomAudit.bpmn.bpmn20.xml" />
+			<zip destfile="${deployments}/cs/csCustomAudit.bar" basedir="${designs}/cs" update="true" includes="*.xml,*.png" />
+			<delete file="${designs}/cs/csCustomAudit.bpmn20.xml" />
+	</target>
+	<!-- 配置管理-配置项申请流程-->
+	<target name="sd.service_apply">
+		<echo>打包流程定义：配置管理-配置项申请流程</echo>
+		<copy file="${designs}/sd/serviceApply.bpmn" tofile="${designs}/sd/serviceApply.bpmn20.xml" />
+		<zip destfile="${deployments}/sd/serviceApply.bar" basedir="${designs}/sd" update="true" includes="*.xml,*.png" />
+		<delete file="${designs}/sd/serviceApply.bpmn20.xml" />
+	</target>
+</project>

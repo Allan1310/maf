@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.cm.dao.CmBaseCodeDao">
+    
+	<sql id="cmBaseCodeColumns">
+		a.id AS "id",
+		a.code_name AS "codeName",
+		a.code_value AS "codeValue",
+		a.note AS "note"
+	</sql>
+	
+	<sql id="cmBaseCodeJoins">
+	</sql>
+    
+	<select id="get" resultType="CmBaseCode">
+		SELECT 
+			<include refid="cmBaseCodeColumns"/>
+		FROM cm_base_code a
+		<include refid="cmBaseCodeJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CmBaseCode">
+		SELECT 
+			<include refid="cmBaseCodeColumns"/>
+		FROM cm_base_code a
+		<include refid="cmBaseCodeJoins"/>
+		<if test="codeName !=null and codeName!='' ">
+			where a.code_name = #{codeName}
+		</if>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CmBaseCode">
+		SELECT 
+			<include refid="cmBaseCodeColumns"/>
+		FROM cm_base_code a
+		<include refid="cmBaseCodeJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cm_base_code(
+			id,
+			code_name,
+			code_value,
+			note
+		) VALUES (
+			#{id},
+			#{codeName},
+			#{codeValue},
+			#{note}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cm_base_code SET 	
+			code_name = #{codeName},
+			code_value = #{codeValue},
+			note = #{note}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM cm_base_code
+		WHERE id = #{id}
+	</update>
+	
+	<select id="findBaseCodeByName" resultType="CmBaseCode">
+		SELECT 
+			<include refid="cmBaseCodeColumns"/>
+		FROM cm_base_code a
+		<include refid="cmBaseCodeJoins"/>
+		WHERE a.code_name = #{codeName}
+	</select>
+	
+</mapper>

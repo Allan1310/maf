@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.cases.dao.CaseStepsDao">
+    	
+	<sql id="caseStepsColumns">
+		a.id AS "id",
+		a.case_id AS "caseId",
+		a.sort AS "sort",
+		a.obj_name AS "objName",
+		a.type AS "type",
+		a.param AS "param",
+		a.motion AS "motion",
+		a.screenshot AS "screenshot",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+    <sql id="caseStepsJoins">
+    
+    </sql>
+    
+    <sql id="userJoins">
+		LEFT JOIN sys_user_role ur ON ur.user_id = a.id
+        LEFT JOIN sys_role r ON r.id = ur.role_id
+    </sql>
+    
+	<select id="get" resultType="CaseSteps">
+		SELECT 
+			<include refid="caseStepsColumns"/>
+		FROM case_steps a
+			<include refid="caseStepsJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CaseSteps">
+		SELECT 
+			<include refid="caseStepsColumns"/>
+		FROM case_steps a
+		<include refid="caseStepsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			
+		</where>
+		ORDER BY a.update_date ASC
+	</select>
+	
+	<select id="findAllList" resultType="CaseSteps">
+		SELECT 
+			<include refid="caseStepsColumns"/>
+		FROM case_steps a
+		<include refid="caseStepsJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
+		ORDER BY  a.update_date ASC
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO case_steps(
+			id, 
+			case_id,
+			sort,
+			obj_name,
+			type,
+			param,
+			motion,
+			screenshot,
+			create_by, 
+			create_date, 
+			update_by, 
+			update_date, 
+			remarks, 
+			del_flag
+		) VALUES (
+			#{id}, 
+			#{caseId}, 
+			#{sort}, 
+			#{objName},
+			#{type},
+			#{param},
+			#{motion},
+			#{screenshot},
+			#{createBy.id}, 
+			#{createDate}, 
+			#{updateBy.id}, 
+			#{updateDate}, 
+			#{remarks}, 
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE case_steps SET 
+			 
+			case_id = #{caseId},
+			sort = #{sort},
+			obj_name = #{objName},
+			type = #{type},
+			param = #{param},
+			motion = #{motion},
+			screenshot = #{screenshot},
+			update_by = #{updateBy.id}, 
+			update_date = #{updateDate}, 
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE case_steps SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id} 
+	</update>
+	
+</mapper>

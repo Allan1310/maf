@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.msg.dao.MsginfoDao">
+    
+	<sql id="MsginfoColumns">
+		a.id AS "id",
+		a.send_mode AS "sendMode",
+		a.sender_id AS "senderId",
+		a.send_name AS "sendName",
+		a.receiver_id AS "receiverId",
+		a.receiver_name AS "receiverName",
+		a.ccopyer_id AS "ccopyerId",
+		a.blinder_id AS "blinderId",
+		a.msg_title AS "msgTitle",
+		a.message AS "message",
+		a.msg_type AS "msgType",
+		a.back_flag AS "backFlag",
+		a.plan_time AS "planTime",
+		a.actual_time AS "actualTime",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.read_flag AS "readFlag"
+	</sql>
+	
+	<sql id="MsginfoJoins">
+		JOIN sys_user u ON u.id = a.create_by
+		JOIN sys_office o ON o.id = u.office_id
+	</sql>
+    
+	<select id="get" resultType="Msginfo">
+		SELECT 
+			<include refid="MsginfoColumns"/>
+		FROM msg_msginfo a
+		<include refid="MsginfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findBybackflag" resultType="Msginfo">
+		SELECT 
+			<include refid="MsginfoColumns"/>
+		FROM msg_msginfo a
+			<include refid="MsginfoJoins"/>
+		<where>
+			a.back_flag =  #{backFlag}
+		</where>
+	</select>
+	
+	<select id="findByreceiverId" resultType="Msginfo">
+		SELECT 
+			<include refid="MsginfoColumns"/>
+		FROM msg_msginfo a
+			<include refid="MsginfoJoins"/>
+		<where>
+			a.receiver_id = #{receiverId}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 在这里配置查询字段 -->
+	<select id="findList" resultType="Msginfo">
+		SELECT 
+			<include refid="MsginfoColumns"/>
+		FROM msg_msginfo a
+		<include refid="MsginfoJoins"/>
+		where a.del_flag = #{DEL_FLAG_NORMAL}
+		<if test="receiverName != null and receiverName != ''">
+			and a.receiver_name = #{receiverName}
+		</if>
+		<if test="msgType != null and msgType != ''">
+			and a.msg_type = #{msgType}
+		</if>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findCount" resultType="Long">
+		select COUNT(1) from msg_msginfo where receiver_id=#{id} and back_flag = '1' and read_flag='0' and msg_type='4' and del_flag='0'
+	</select>
+	
+	<!-- 这个配置不用动 -->
+	<select id="findAllList" resultType="Msginfo">
+		SELECT 
+			<include refid="MsginfoColumns"/>
+		FROM msg_msginfo a
+		<include refid="MsginfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	<insert id="insert">
+		INSERT INTO msg_msginfo(
+			id,
+			send_mode,
+			sender_id,
+			send_name,
+			receiver_id,
+			receiver_name,
+			ccopyer_id,
+			blinder_id,
+			msg_title,
+			message,
+			msg_type,
+			back_flag,
+			plan_time,
+			actual_time,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			read_flag
+		) VALUES (
+			#{id},
+			#{sendMode},
+			#{senderId},
+			#{sendName},
+			#{receiverId},
+			#{receiverName},
+			#{ccopyerId},
+			#{blinderId},
+			#{msgTitle},
+			#{message},
+			#{msgType},
+			#{backFlag},
+			#{planTime},
+			#{actualTime},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{readFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE msg_msginfo SET 	
+			send_mode = #{sendMode},
+			sender_id = #{senderId},
+			send_name = #{sendName},
+			receiver_id = #{receiverId},
+			receiver_name = #{receiverName},
+			ccopyer_id = #{ccopyerId},
+			blinder_id = #{blinderId},
+			msg_title = #{msgTitle},
+			message = #{message},
+			msg_type = #{msgType},
+			back_flag = #{backFlag},
+			read_flag = #{readFlag},
+			plan_time = #{planTime},
+			actual_time = #{actualTime},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	<!-- 消息删除 -->	
+	<update id="delete">
+		UPDATE msg_msginfo SET 
+			del_flag = '0'
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

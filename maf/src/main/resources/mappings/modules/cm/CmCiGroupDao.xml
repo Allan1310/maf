@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.cm.dao.CmCiGroupDao">
+    
+	<sql id="cmCiGroupColumns">
+		a.id AS "id",
+		a.parent_id AS "parent.id",
+		a.parent_ids AS "parentIds",
+		a.group_number AS "groupNumber",
+		a.group_name AS "groupName",
+		a.group_desc AS "groupDesc",
+		a.status AS "status",
+		a.sort AS "sort",
+		a.icon_id AS "cmGraphIcon.id",
+		<!-- a.ci_id AS "instance.id", -->
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="cmCiGroupJoins">
+	</sql>
+    
+	<select id="get" resultType="CmCiGroup">
+		SELECT 
+			<include refid="cmCiGroupColumns"/>
+			,b.icon_file AS "cmGraphIcon.iconFile"
+			,b.icon_name AS "cmGraphIcon.iconName"
+		FROM cm_ci_group a
+		JOIN cm_graph_icon b on b.id = a.icon_id
+		<include refid="cmCiGroupJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CmCiGroup">
+		SELECT 
+			<include refid="cmCiGroupColumns"/>
+		FROM cm_ci_group a
+		<include refid="cmCiGroupJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="parent != null and parent.id != null and parent.id != ''">
+				AND a.parent_id = #{parent.id}
+			</if>
+			<if test="parentIds != null and parentIds != ''">
+				AND a.parent_ids LIKE 
+					<if test="dbName == 'oracle'">'%'||#{parentIds}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{parentIds}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{parentIds},'%')</if>
+			</if>
+		</where>
+		ORDER BY sort ASC
+	</select>
+	
+	<select id="findAllList" resultType="CmCiGroup">
+		SELECT 
+			<include refid="cmCiGroupColumns"/>
+		FROM cm_ci_group a
+		<include refid="cmCiGroupJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			
+		</where>
+	</select>
+	
+	<select id="findByParentIdsLike" resultType="CmCiGroup">
+		SELECT
+			<include refid="cmCiGroupColumns"/>
+		FROM cm_ci_group a
+		<include refid="cmCiGroupJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<!-- AND a.parent_ids LIKE #{parentIds} -->
+		</where>
+		<if test="parentId != null and parentId != ''">
+			AND a.parent_ids LIKE 
+				<if test="dbName == 'oracle'">'%'||#{parentIds}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{parentIds}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{parentIds},'%')</if>
+		</if>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cm_ci_group(
+			id,
+			parent_id,
+			parent_ids,
+			group_number,
+			group_name,
+			group_desc,
+			status,
+		<!-- 	ci_id ,-->
+			sort,
+			icon_id ,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{parent.id},
+			#{parentIds},
+			#{groupNumber},
+			#{groupName},
+			#{groupDesc},
+			#{status},
+		<!-- 	#{instance.id},-->
+			#{sort},
+			#{cmGraphIcon.id},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cm_ci_group SET 	
+			parent_id = #{parent.id},
+			parent_ids = #{parentIds},
+			group_number = #{groupNumber},
+			group_name = #{groupName},
+			group_desc = #{groupDesc},
+			status = #{status},
+			sort = #{sort},
+			icon_id = #{cmGraphIcon.id} ,
+			<!-- ci_id = #{instance.id},-->
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateParentIds">
+		UPDATE cm_ci_group SET 
+			parent_id = #{parent.id}, 
+			parent_ids = #{parentIds}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE cm_ci_group SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id} OR parent_ids LIKE "%,"#{id}",%"
+	</update>
+	
+	<select id="findEntityByParameter" resultType="CmCiGroup">
+		SELECT 
+			<include refid="cmCiGroupColumns"/>
+		FROM cm_ci_group a
+		<include refid="cmCiGroupJoins"/>
+		<where>
+			a.del_flag = '0'
+			AND a.parent_id = #{parentId}
+			AND a.group_name = #{groupName}
+		</where>
+	</select>
+	
+	<select id="findGroupByParentId" resultType="CmCiGroup">
+		SELECT 
+			<include refid="cmCiGroupColumns"/>
+		FROM cm_ci_group a
+		<include refid="cmCiGroupJoins"/>
+		<where>
+			a.del_flag = '0'
+			AND a.parent_id = #{parentId}
+			AND a.status = '0'
+		</where>
+	</select>
+	
+</mapper>

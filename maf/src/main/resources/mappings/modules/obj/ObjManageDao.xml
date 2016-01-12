@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.obj.dao.ObjManageDao">
+    
+    	<sql id="ObjManageColumns">
+		a.id AS "id",
+		a.item_id AS "itemId",
+		a.item_name AS "itemName",
+		a.path_id AS "pathId",
+		a.path_name AS "pathName",
+		a.obj_name AS "objName",
+		a.xpath_code AS "xpathCode",
+		a.jquery_code AS "jqueryCode",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+    <sql id="ObjManageJoins">
+    
+    </sql>
+    
+    <sql id="userJoins">
+		LEFT JOIN sys_user_role ur ON ur.user_id = a.id
+        LEFT JOIN sys_role r ON r.id = ur.role_id
+    </sql>
+    
+	<select id="get" resultType="ObjManage">
+		SELECT 
+			<include refid="ObjManageColumns"/>
+		FROM obj_manage a
+			<include refid="ObjManageJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ObjManage">
+		SELECT 
+			<include refid="ObjManageColumns"/>
+		FROM obj_manage a
+			<include refid="ObjManageJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
+		<if test="itemName != null and itemName != ''">
+				AND a.item_name like CONCAT('%',#{itemName},'%')
+		</if>
+		<if test="pathName != null and pathName != ''">
+				AND a.path_name like CONCAT('%',#{pathName},'%')
+		</if>
+		<if test="objName != null and objName != ''">
+				AND a.obj_name like CONCAT('%',#{objName},'%')
+		</if>
+		${sqlMap.af}
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ObjManage">
+		SELECT 
+			<include refid="ObjManageColumns"/>
+		FROM obj_manage a
+			<include refid="ObjManageJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
+		ORDER  a.update_date DESC
+	</select>
+	
+	<select id="findObjManageListByItemId" resultType="ObjManage">
+		SELECT 
+			<include refid="ObjManageColumns"/>
+		FROM obj_manage a
+		<include refid="ObjManageJoins"/>
+		where a.item_id = #{itemId} and a.del_flag = '0'
+	</select>
+	
+	
+	<insert id="insert">
+		INSERT INTO obj_manage(
+			id,
+			item_id, 
+			item_name, 
+			path_id, 
+			path_name,
+			obj_name,
+			xpath_code,
+			jquery_code,
+			create_by, 
+			create_date, 
+			update_by, 
+			update_date, 
+			remarks, 
+			del_flag
+		) VALUES (
+			#{id},
+			#{itemId}, 
+			#{itemName},  
+			#{pathId}, 
+			#{pathName}, 
+			#{objName},
+			#{xpathCode},
+			#{jqueryCode},   
+			#{createBy.id}, 
+			#{createDate}, 
+			#{updateBy.id}, 
+			#{updateDate}, 
+			#{remarks}, 
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE obj_manage SET 
+			item_id = #{itemId}, 
+			item_name = #{itemName}, 
+			path_id = #{pathId}, 
+			path_name = #{pathName}, 
+			obj_name = #{objName}, 
+			xpath_code = #{xpathCode}, 
+			jquery_code = #{jqueryCode}, 
+			update_by = #{updateBy.id}, 
+			update_date = #{updateDate}, 
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE obj_manage SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	
+</mapper>

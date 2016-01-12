@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.cm.dao.CmAuditApplyDao">
+    
+	<sql id="cmAuditApplyColumns">
+		a.id AS "id",
+		a.audit_number AS "auditNumber",
+		a.proc_ins_id AS "procInsId",
+		a.audit_object AS "auditObject",
+		a.audit_project AS "auditProject",
+		a.audit_time AS "auditTime",
+		a.audit_user AS "auditUser",
+		a.audit_condition AS "auditCondition",
+		a.audit_scope AS "auditScope",
+		a.audit_data_methods AS "auditDataMethods",
+		a.audit_mode AS "auditMode",
+		a.audit_plan AS "auditPlan",
+		a.audit_steps AS "auditSteps",
+		a.status AS "status",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.audit_purpose AS "auditPurpose",
+		a.audit_result AS auditResult,
+		a.audit_report AS auditReport,
+		a.audit_sign AS auditSign,
+		a.audit_reportNumber AS auditReportNumber
+	</sql>
+	
+	<sql id="cmAuditApplyJoins">
+	</sql>
+    <sql id="userJoins">
+		JOIN sys_user u ON u.id = a.create_by
+		JOIN sys_office o ON o.id = u.office_id
+	</sql>
+	<select id="get" resultType="CmAuditApply">
+		SELECT 
+			<include refid="cmAuditApplyColumns"/>
+		FROM cm_audit_apply a
+		<include refid="cmAuditApplyJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CmAuditApply">
+		SELECT 
+			<include refid="cmAuditApplyColumns"/>
+			,u.name AS "createBy.name"
+		FROM cm_audit_apply a
+		<include refid="cmAuditApplyJoins"/>
+		<include refid="userJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<if test="auditObject != null and auditObject != ''">
+			AND a.audit_object Like
+				<if test="dbName == 'mssql'">'%'+#{auditObject}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{auditObject},'%')</if>
+		</if>
+		<if test="auditProject != null and auditProject != ''">
+			AND a.audit_project Like
+				<if test="dbName == 'mssql'">'%'+#{auditProject}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{auditProject},'%')</if>
+		</if>
+		<if test="auditTime != null and auditTime != ''">
+			AND a.audit_time Like
+				<if test="dbName == 'mssql'">'%'+#{auditTime}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{auditTime},'%')</if>
+		</if>
+		${sqlMap.dsf}
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CmAuditApply">
+		SELECT 
+			<include refid="cmAuditApplyColumns"/>
+		FROM cm_audit_apply a
+		<include refid="cmAuditApplyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cm_audit_apply(
+			id,
+			audit_number,
+			proc_ins_id,
+			audit_object,
+			audit_project,
+			audit_time,
+			audit_user,
+			audit_condition,
+			audit_scope,
+			audit_data_methods,
+			audit_mode,
+			audit_plan,
+			audit_steps,
+			status,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			audit_purpose,
+			audit_result,
+			audit_report,
+			audit_sign,
+			audit_reportNumber
+		) VALUES (
+			#{id},
+			#{auditNumber},
+			#{procInsId},
+			#{auditObject},
+			#{auditProject},
+			#{auditTime},
+			#{auditUser},
+			#{auditCondition},
+			#{auditScope},
+			#{auditDataMethods},
+			#{auditMode},
+			#{auditPlan},
+			#{auditSteps},
+			#{status},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{auditPurpose},
+			#{auditResult},
+			#{auditReport},
+			#{auditSign},
+			#{auditReportNumber}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cm_audit_apply SET 	
+			audit_number = #{auditNumber},
+			proc_ins_id = #{procInsId},
+			audit_object = #{auditObject},
+			audit_project = #{auditProject},
+			audit_time = #{auditTime},
+			audit_user = #{auditUser},
+			audit_condition = #{auditCondition},
+			audit_scope = #{auditScope},
+			audit_data_methods = #{auditDataMethods},
+			audit_mode = #{auditMode},
+			audit_plan = #{auditPlan},
+			audit_steps = #{auditSteps},
+			status = #{status},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			audit_purpose = #{auditPurpose},
+			audit_result = #{auditResult},
+			audit_report = #{auditReport},
+			audit_sign = #{auditSign}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE cm_audit_apply SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

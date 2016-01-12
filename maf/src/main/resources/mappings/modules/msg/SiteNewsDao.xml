@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.msg.dao.SiteNewsDao">
+    
+	<sql id="siteNewsColumns">
+		a.id AS "id",
+		a.type AS "type",
+		a.title AS "title",
+		a.content AS "content",
+		a.files AS "files",
+		a.news_date AS "newsDate",
+		a.introduction AS "introduction",
+		a.status AS "status",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		u.name AS "createBy.name"
+		
+	</sql>
+	
+	<sql id="siteNewsJoins">
+		JOIN sys_user u ON u.id = a.create_by
+		JOIN sys_office o ON o.id = u.office_id
+	</sql>
+    
+	<select id="get" resultType="SiteNews">
+		SELECT 
+			<include refid="siteNewsColumns"/>
+		FROM site_news a
+		<include refid="siteNewsJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findReNews" resultType="SiteNews">
+		SELECT 
+			<include refid="siteNewsColumns"/>
+		FROM site_news a
+		<include refid="siteNewsJoins"/>
+		WHERE a.del_flag = 0
+		<if test="title != null and title != ''">
+			AND a.TITLE  like CONCAT('%',#{title},'%')
+		</if>
+			AND a.status = 1
+		ORDER BY a.update_date DESC
+	</select>
+	
+	<select id="findList" resultType="SiteNews">
+		SELECT 
+			<include refid="siteNewsColumns"/>
+		FROM site_news a
+		<include refid="siteNewsJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		<if test="title != null and title != ''">
+			AND a.TITLE  like CONCAT('%',#{title},'%')
+		</if>
+		<if test="type != null and type != ''">
+			AND a.TYPE = #{type}
+		</if>
+		<if test="status != null and status != ''">
+			AND a.STATUS = #{status}
+		</if>
+		AND a.create_by = #{createBy.id}
+		ORDER BY a.update_date DESC
+	</select>
+	
+	<select id="findAllList" resultType="SiteNews">
+		SELECT 
+			<include refid="siteNewsColumns"/>
+		FROM site_news a
+		<include refid="siteNewsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	
+	<select id="findCount" resultType="Long">
+		SELECT 
+			count(1)
+		FROM site_news a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+	
+	
+	<insert id="insert">
+		INSERT INTO site_news(
+			id,
+			type,
+			title,
+			content,
+			files,
+			news_date,
+		    introduction,
+		    status,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{type},
+			#{title},
+			#{content},
+			#{files},
+			#{newsDate},
+		    #{introduction},
+			#{status},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE site_news SET 	
+			type = #{type},
+			title = #{title},
+			content = #{content},
+			files = #{files},
+			news_date = #{newsDate},
+		    introduction = #{introduction},
+			status = #{status},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE site_news SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

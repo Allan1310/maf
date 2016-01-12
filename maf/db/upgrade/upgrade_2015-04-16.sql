@@ -1,0 +1,6 @@
+-- 消息管理状态字典
+insert into `sys_dict` (`id`,`label`, `value`, `type`, `description`, `sort`,`modules`, `create_by`, `create_date`, `update_by`, `update_date`, `remarks`, `del_flag`) values('msg_status_0','待发送','0','msg_status','消息状态','10','0','1',now(),'1',now(),NULL,'0');
+insert into `sys_dict` (`id`,`label`, `value`, `type`, `description`, `sort`,`modules`, `create_by`, `create_date`, `update_by`, `update_date`, `remarks`, `del_flag`) values('msg_status_1','发送中','1','msg_status','消息状态','10','0','1',now(),'1',now(),NULL,'0');
+insert into `sys_dict` (`id`,`label`, `value`, `type`, `description`, `sort`,`modules`, `create_by`, `create_date`, `update_by`, `update_date`, `remarks`, `del_flag`) values('msg_status_2','已发送','2','msg_status','消息状态','10','0','1',now(),'1',now(),NULL,'0');
+insert into `sys_dict` (`id`,`label`, `value`, `type`, `description`, `sort`,`modules`, `create_by`, `create_date`, `update_by`, `update_date`, `remarks`, `del_flag`) values('msg_status_3','发送失败','3','msg_status','消息状态','10','0','1',now(),'1',now(),NULL,'0');
+insert into `sys_dict` (`id`,`label`, `value`, `type`, `description`, `sort`,`modules`, `create_by`, `create_date`, `update_by`, `update_date`, `remarks`, `del_flag`) values('msg_status_4','已取消','4','msg_status','消息状态','10','0','1',now(),'1',now(),NULL,'0');

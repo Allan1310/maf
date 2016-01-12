@@ -1,0 +1,535 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?metadataRepository version='1.1.0'?>
+<repository name='MyEclipse Auxiliary Patches' type='org.eclipse.equinox.internal.p2.metadata.repository.LocalMetadataRepository' version='1'>
+  <properties size='2'>
+    <property name='p2.compressed' value='true'/>
+    <property name='p2.timestamp' value='1368608365000'/>
+  </properties>
+  <units size='7'>
+  	<unit id='com.ibm.rules.studio.base.feature.feature.group_feature.patch' version='1.0.0.v201202161516'>
+		<patchScope>
+			<scope>
+				<requires size='1'>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='com.ibm.rules.studio.base.feature.feature.group' range='7.5.0.0-20111024_1151' />
+				</requires>
+			</scope>
+		</patchScope>
+		<changes>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.platform.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.platform.feature.group' range='3.7.0' />
+				</to>
+			</change>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.jdt.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.jdt.feature.group' range='3.7.0' />
+				</to>
+			</change>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.draw2d.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.draw2d.feature.group' range='3.7.0' />
+				</to>
+			</change>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.emf.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.emf.feature.group' range='3.7.0' />
+				</to>
+			</change>			
+		</changes>
+		<lifeCycle>
+			<required namespace='org.eclipse.equinox.p2.iu'
+				name='com.ibm.rules.studio.base.feature.feature.group' range='7.5.0.0-20111024_1151'
+				greedy='false' />
+		</lifeCycle>
+		<update id='com.ibm.rules.studio.base.feature.feature.group_feature.patch'
+			range='[0.0.0,1.0.0.v201202161516)' severity='0' />
+		<properties size='3'>
+			<property name='org.eclipse.equinox.p2.type.patch' value='true' />
+			<property name='org.eclipse.equinox.p2.name'
+				value='Feature Patch to allow ILOG with Eclipse 3.7 - studio.base' />
+			<property name='org.eclipse.equinox.p2.provider' value='Genuitec, LLC' />
+		</properties>
+		<provides size='1'>
+			<provided namespace='org.eclipse.equinox.p2.iu'
+				name='com.ibm.rules.studio.base.feature.feature.group_feature.patch'
+				version='1.0.0.v201202161516' />
+		</provides>
+		<requires size='1'>
+			<required namespace='org.eclipse.equinox.p2.iu'
+				name='com.ibm.rules.studio.base.feature.feature.group' range='7.5.0.0-20111024_1151'
+				greedy='false' />
+		</requires>
+		<touchpoint id='null' version='0.0.0' />
+	</unit>
+  	<unit id='ilog.rules.studio.feature.group_feature.patch' version='1.0.0.v201202161516'>
+		<patchScope>
+			<scope>
+				<requires size='1'>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='ilog.rules.studio.feature.group' range='7.5.0.0-20111025_0938' />
+				</requires>
+			</scope>
+		</patchScope>
+		<changes>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.platform.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.platform.feature.group' range='3.7.0' />
+				</to>
+			</change>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.jdt.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.jdt.feature.group' range='3.7.0' />
+				</to>
+			</change>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.pde.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.pde.feature.group' range='3.7.0' />
+				</to>
+			</change>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.emf.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.emf.feature.group' range='3.7.0' />
+				</to>
+			</change>			
+		</changes>
+		<lifeCycle>
+			<required namespace='org.eclipse.equinox.p2.iu'
+				name='ilog.rules.studio.feature.group' range='7.5.0.0-20111025_0938'
+				greedy='false' />
+		</lifeCycle>
+		<update id='ilog.rules.studio.feature.group_feature.patch'
+			range='[0.0.0,1.0.0.v201202161516)' severity='0' />
+		<properties size='3'>
+			<property name='org.eclipse.equinox.p2.type.patch' value='true' />
+			<property name='org.eclipse.equinox.p2.name'
+				value='Feature Patch to allow ILOG with Eclipse 3.7 - studio' />
+			<property name='org.eclipse.equinox.p2.provider' value='Genuitec, LLC' />
+		</properties>
+		<provides size='1'>
+			<provided namespace='org.eclipse.equinox.p2.iu'
+				name='ilog.rules.studio.feature.group_feature.patch'
+				version='1.0.0.v201202161516' />
+		</provides>
+		<requires size='1'>
+			<required namespace='org.eclipse.equinox.p2.iu'
+				name='ilog.rules.studio.feature.group' range='7.5.0.0-20111025_0938'
+				greedy='false' />
+		</requires>
+		<touchpoint id='null' version='0.0.0' />
+	</unit>
+	<unit id='com.genuitec.myeclipse.blue.feature.feature.group_feature.patch' version='1.0.0.v201111250400'>
+		<patchScope>
+			<scope>
+				<requires size='1'>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='com.genuitec.myeclipse.blue.feature.feature.group' range='10.0.0' />
+				</requires>
+			</scope>
+		</patchScope>
+		<changes>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.java.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.java.feature.group' range='0.3.0' />
+				</to>
+			</change>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.java.jdt.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.java.jdt.feature.group' range='0.3.0' />
+				</to>
+			</change>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.modeling.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.modeling.feature.group' range='0.3.0' />
+				</to>
+			</change>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.modeling.xml.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.modeling.xml.feature.group' range='0.3.0' />
+				</to>
+			</change>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.osgi.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.osgi.feature.group' range='0.3.0' />
+				</to>
+			</change>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.ui.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.ui.feature.group' range='0.3.0' />
+				</to>
+			</change>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.ui.swt.graphiti.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.ui.swt.graphiti.feature.group' range='0.3.0' />
+				</to>
+			</change>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.ui.swt.xml.editor.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.ui.swt.xml.editor.feature.group' range='0.3.0' />
+				</to>
+			</change>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.platform.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.sapphire.platform.feature.group' range='0.3.0' />
+				</to>
+			</change>
+		</changes>
+		<lifeCycle>
+			<required namespace='org.eclipse.equinox.p2.iu'
+				name='com.genuitec.myeclipse.blue.feature.feature.group' range='10.0.0'
+				greedy='false' />
+		</lifeCycle>
+		<update id='com.genuitec.myeclipse.blue.feature.feature.group_feature.patch'
+			range='[0.0.0,1.0.0.v201111250400)' severity='0' />
+		<properties size='3'>
+			<property name='org.eclipse.equinox.p2.type.patch' value='true' />
+			<property name='org.eclipse.equinox.p2.name'
+				value='Feature Patch to allow Sapphire versions beyond 0.3.0 in Blue' />
+			<property name='org.eclipse.equinox.p2.provider' value='Genuitec, LLC' />
+		</properties>
+		<provides size='1'>
+			<provided namespace='org.eclipse.equinox.p2.iu'
+				name='com.genuitec.myeclipse.blue.feature.feature.group_feature.patch'
+				version='1.0.0.v201111250400' />
+		</provides>
+		<requires size='1'>
+			<required namespace='org.eclipse.equinox.p2.iu'
+				name='com.genuitec.myeclipse.blue.feature.feature.group' range='10.0.0'
+				greedy='false' />
+		</requires>
+		<touchpoint id='null' version='0.0.0' />
+	</unit>
+    <unit id='pulse.org.eclipse.e4.runtime.feature.feature.group_0.9.x.feature.patch' version='1.0.0.v201006021214'>
+      <patchScope>
+        <scope>
+          <requires size='1'>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.runtime.feature.feature.group' range='[0.9.0,0.10.0)'/>
+          </requires>
+        </scope>
+      </patchScope>
+      <changes>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf' range='0.0.0'/>
+          </to>
+        </change>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.filetransfer' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.filetransfer' range='0.0.0'/>
+          </to>
+        </change>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.identity' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.identity' range='0.0.0'/>
+          </to>
+        </change>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.provider.filetransfer' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.provider.filetransfer' range='0.0.0'/>
+          </to>
+        </change>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.provider.filetransfer.httpclient' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.provider.filetransfer.httpclient' range='0.0.0'/>
+          </to>
+        </change>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.provider.filetransfer.httpclient.ssl' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.provider.filetransfer.httpclient.ssl' range='0.0.0'/>
+          </to>
+        </change>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.provider.filetransfer.ssl' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.provider.filetransfer.ssl' range='0.0.0'/>
+          </to>
+        </change>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.ssl' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.ssl' range='0.0.0'/>
+          </to>
+        </change>
+      </changes>
+      <lifeCycle>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.runtime.feature.feature.group' range='[0.9.0,0.10.0)' greedy='false'/>
+      </lifeCycle>
+      <update id='pulse.org.eclipse.e4.runtime.feature.feature.group_0.9.x.feature.patch' range='[0.0.0,1.0.0.v201006021214)' severity='0'/>
+      <properties size='3'>
+        <property name='org.eclipse.equinox.p2.type.patch' value='true'/>
+        <property name='org.eclipse.equinox.p2.name' value='Feature Patch to org.eclipse.e4.runtime.feature.feature.group_0.9.x'/>
+        <property name='org.eclipse.equinox.p2.provider' value='Genuitec, LLC'/>
+      </properties>
+      <provides size='1'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='pulse.org.eclipse.e4.runtime.feature.feature.group_0.9.x.feature.patch' version='1.0.0.v201006021214'/>
+      </provides>
+      <requires size='1'>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.runtime.feature.feature.group' range='[0.9.0,0.10.0)' greedy='false'/>
+      </requires>
+      <touchpoint id='null' version='0.0.0'/>
+    </unit>
+    <unit id='pulse.com.zend.php.feature.group_7.2.x.feature.patch' version='1.0.0.v201006021214'>
+      <patchScope>
+        <scope>
+          <requires size='1'>
+            <required namespace='org.eclipse.equinox.p2.iu' name='com.zend.php.feature.group' range='[7.2.0,7.3.0)'/>
+          </requires>
+        </scope>
+      </patchScope>
+      <changes>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf' range='0.0.0'/>
+          </to>
+        </change>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.filetransfer' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.filetransfer' range='0.0.0'/>
+          </to>
+        </change>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.identity' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.identity' range='0.0.0'/>
+          </to>
+        </change>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.provider.filetransfer' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.provider.filetransfer' range='0.0.0'/>
+          </to>
+        </change>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.provider.filetransfer.httpclient' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.provider.filetransfer.httpclient' range='0.0.0'/>
+          </to>
+        </change>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.provider.filetransfer.httpclient.ssl' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.provider.filetransfer.httpclient.ssl' range='0.0.0'/>
+          </to>
+        </change>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.provider.filetransfer.ssl' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.provider.filetransfer.ssl' range='0.0.0'/>
+          </to>
+        </change>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.ssl' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ecf.ssl' range='0.0.0'/>
+          </to>
+        </change>
+      </changes>
+      <lifeCycle>
+        <required namespace='org.eclipse.equinox.p2.iu' name='com.zend.php.feature.group' range='[7.2.0,7.3.0)' greedy='false'/>
+      </lifeCycle>
+      <update id='pulse.com.zend.php.feature.group_7.2.x.feature.patch' range='[0.0.0,1.0.0.v201006021214)' severity='0'/>
+      <properties size='3'>
+        <property name='org.eclipse.equinox.p2.type.patch' value='true'/>
+        <property name='org.eclipse.equinox.p2.name' value='Feature Patch to com.zend.php.feature.group_7.2.x'/>
+        <property name='org.eclipse.equinox.p2.provider' value='Genuitec, LLC'/>
+      </properties>
+      <provides size='1'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='pulse.com.zend.php.feature.group_7.2.x.feature.patch' version='1.0.0.v201006021214'/>
+      </provides>
+      <requires size='1'>
+        <required namespace='org.eclipse.equinox.p2.iu' name='com.zend.php.feature.group' range='[7.2.0,7.3.0)' greedy='false'/>
+      </requires>
+      <touchpoint id='null' version='0.0.0'/>
+    </unit>
+    <unit id='com.genuitec.myeclipse.base.feature.group_feature.patch' version='1.0.0.v201305151400'>
+		<patchScope>
+			<scope>
+				<requires size='1'>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='com.genuitec.myeclipse.base.feature.group' range='10.0.0' />
+				</requires>
+			</scope>
+		</patchScope>
+		<changes>
+			<change>
+				<from>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.graphiti.feature.feature.group' range='0.0.0' />
+				</from>
+				<to>
+					<required namespace='org.eclipse.equinox.p2.iu'
+						name='org.eclipse.graphiti.feature.feature.group' range='0.8.0' />
+				</to>
+			</change>
+		</changes>
+		<lifeCycle>
+			<required namespace='org.eclipse.equinox.p2.iu'
+				name='com.genuitec.myeclipse.base.feature.group' range='10.0.0'
+				greedy='false' />
+		</lifeCycle>
+		<update id='com.genuitec.myeclipse.base.feature.group_feature.patch'
+			range='[0.0.0,1.0.0.v201305151400)' severity='0' />
+		<properties size='3'>
+			<property name='org.eclipse.equinox.p2.type.patch' value='true' />
+			<property name='org.eclipse.equinox.p2.name'
+				value='Feature Patch to allow Graphiti versions beyond 0.8.0' />
+			<property name='org.eclipse.equinox.p2.provider' value='Genuitec, LLC' />
+		</properties>
+		<provides size='1'>
+			<provided namespace='org.eclipse.equinox.p2.iu'
+				name='com.genuitec.myeclipse.base.feature.group_feature.patch'
+				version='1.0.0.v201305151400' />
+		</provides>
+		<requires size='1'>
+			<required namespace='org.eclipse.equinox.p2.iu'
+				name='com.genuitec.myeclipse.base.feature.group' range='10.0.0'
+				greedy='false' />
+		</requires>
+		<touchpoint id='null' version='0.0.0' />
+	</unit>
+    <unit id='com.genuitec.myeclipse.auxiliary.feature.patches.group' version='1.0.0.v201305151500'>
+      <update id='com.genuitec.myeclipse.auxiliary.feature.patches.group' range='[0.0.0,1.0.0.v201305151500)' severity='0'/>
+      <properties size='2'>
+        <property name='org.eclipse.equinox.p2.name' value='MyEclipse Patches for Auxiliary Software Features'/>
+        <property name='org.eclipse.equinox.p2.provider' value='Genuitec, LLC'/>
+      </properties>
+      <provides size='1'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='com.genuitec.myeclipse.auxiliary.feature.patches.group' version='1.0.0.v201305151500'/>
+      </provides>
+      <requires size='6'>
+      	<required namespace='org.eclipse.equinox.p2.iu'	name='ilog.rules.studio.feature.group_feature.patch' range='[1.0.0.v201202161516,1.0.0.v201202161516]' optional='true'/>      	
+      	<required namespace='org.eclipse.equinox.p2.iu'	name='com.ibm.rules.studio.base.feature.feature.group_feature.patch' range='[1.0.0.v201202161516,1.0.0.v201202161516]' optional='true'/>      	
+      	<required namespace='org.eclipse.equinox.p2.iu'	name='com.genuitec.myeclipse.blue.feature.feature.group_feature.patch' range='[1.0.0.v201111250400,1.0.0.v201111250400]' optional='true'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='pulse.com.zend.php.feature.group_7.2.x.feature.patch' range='[1.0.0.v201006021214,1.0.0.v201006021214]' optional='true'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='pulse.org.eclipse.e4.runtime.feature.feature.group_0.9.x.feature.patch' range='[1.0.0.v201006021214,1.0.0.v201006021214]' optional='true'/>
+        <required namespace='org.eclipse.equinox.p2.iu'	name='com.genuitec.myeclipse.base.feature.group_feature.patch' range='[1.0.0.v201305151400,1.0.0.v201305151400]' optional='true'/>
+      </requires>
+      <touchpoint id='null' version='0.0.0'/>
+    </unit>
+  </units>
+</repository>

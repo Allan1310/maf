@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.cases.dao.CaseManageDao">
+    	
+	<sql id="caseManageColumns">
+		a.id AS "id",
+		a.parent_id AS "parent.id",
+		a.parent_name AS "parent.name",
+		a.case_name AS "caseName",
+		a.step_detail AS "stepDetail",
+		a.test_data AS "testData",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+    <sql id="caseManageJoins">
+    
+    </sql>
+    
+    <sql id="userJoins">
+		LEFT JOIN sys_user_role ur ON ur.user_id = a.id
+        LEFT JOIN sys_role r ON r.id = ur.role_id
+    </sql>
+    
+	<select id="get" resultType="CaseManage">
+		SELECT 
+			<include refid="caseManageColumns"/>
+		FROM case_manage a
+			<include refid="caseManageJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CaseManage">
+		SELECT 
+			<include refid="caseManageColumns"/>
+		FROM case_manage a
+		<include refid="caseManageJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		${sqlMap.af}
+		ORDER BY a.update_date ASC
+	</select>
+	
+	<select id="findAllList" resultType="CaseManage">
+		SELECT 
+			<include refid="caseManageColumns"/>
+		FROM case_manage a
+		<include refid="caseManageJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
+		ORDER BY  a.update_date ASC
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO case_manage(
+			id, 
+			parent_id,
+			parent_name,
+			case_name,
+			step_detail,
+			test_data,
+			create_by, 
+			create_date, 
+			update_by, 
+			update_date, 
+			remarks, 
+			del_flag
+		) VALUES (
+			#{id}, 
+			#{parent.id}, 
+			#{parent.name}, 
+			#{caseName},
+			#{stepDetail},
+			#{testData},
+			#{createBy.id}, 
+			#{createDate}, 
+			#{updateBy.id}, 
+			#{updateDate}, 
+			#{remarks}, 
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE case_manage SET 
+			parent_id = #{parent.id}, 
+			parent_name = #{parent.name}, 
+			case_name = #{caseName},
+			step_detail = #{stepDetail},
+			test_data = #{testData},
+			update_by = #{updateBy.id}, 
+			update_date = #{updateDate}, 
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE case_manage SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id} 
+	</update>
+	
+</mapper>

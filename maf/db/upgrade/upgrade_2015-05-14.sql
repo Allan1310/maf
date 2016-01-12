@@ -1,0 +1,1 @@
+alter table hm_defined_manage modify column execute_rule varchar(100) ;

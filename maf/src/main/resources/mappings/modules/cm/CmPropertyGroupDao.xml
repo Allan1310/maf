@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.cm.dao.CmPropertyGroupDao">
+    
+	<sql id="cmPropertyGroupColumns">
+		a.id AS "id",
+		a.group_id AS "groupId",
+		a.property_id AS "cmPropertyManage.id",
+		a.status AS "status",
+		a.node AS "node",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+		
+	</sql>
+	
+	<sql id="cmPropertyGroupJoins">
+	</sql>
+	
+	<select id="get" resultType="CmPropertyGroup">
+		SELECT 
+			<include refid="cmPropertyGroupColumns"/>
+		FROM cm_property_group a
+		<include refid="cmPropertyGroupJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CmPropertyGroup">
+		SELECT 
+			<include refid="cmPropertyGroupColumns"/>
+		FROM cm_property_group a
+		<include refid="cmPropertyGroupJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CmPropertyGroup">
+		SELECT 
+			<include refid="cmPropertyGroupColumns"/>
+		FROM cm_property_group a
+		<include refid="cmPropertyGroupJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cm_property_group(
+			id,
+			group_id,
+			property_id,
+			status,
+			node,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{groupId},
+			#{cmPropertyManage.id},
+			#{status},
+			#{node},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cm_property_group SET 	
+			group_id = #{groupId},
+			property_id = #{cmPropertyManage.id},
+			status = #{status},
+			node = #{node},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE cm_property_group SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	<select id="findEntityByPropertyId" resultType="CmPropertyGroup">
+		SELECT 
+			<include refid="cmPropertyGroupColumns"/>
+		FROM cm_property_group a
+		<include refid="cmPropertyGroupJoins"/>
+		WHERE a.del_flag = '0'
+		AND a.property_id = #{propertyId}
+	</select>
+	
+	<select id="findEntityByGroupId" resultType="CmPropertyGroup">
+		SELECT 
+			<include refid="cmPropertyGroupColumns"/>
+			,b.property_name AS "cmPropertyManage.propertyName",
+			b.data_type AS "cmPropertyManage.dataType",
+			b.property_desc AS "cmPropertyManage.propertyDesc",
+			b.is_null AS "cmPropertyManage.isNull",
+			b.ext1 AS "cmPropertyManage.ext1",
+			b.ext2 AS "cmPropertyManage.ext2"
+		FROM cm_property_group a
+		left join cm_property_manage b on a.property_id = b.id
+		WHERE a.del_flag = '0'
+		AND a.group_id = #{groupId}
+		ORDER BY b.sort ASC
+	</select>
+	
+	<select id="findEntityByParameter" resultType="CmPropertyGroup">
+		SELECT 
+			<include refid="cmPropertyGroupColumns"/>
+			,b.property_name AS "cmPropertyManage.propertyName",
+			b.data_type AS "cmPropertyManage.dataType",
+			b.property_desc AS "cmPropertyManage.propertyDesc"
+		FROM cm_property_group a
+		left join cm_property_manage b on a.property_id = b.id
+		WHERE a.del_flag = '0'
+		AND a.group_id = #{groupId}
+		AND a.property_id = #{propertyId}
+	</select>
+	
+</mapper>

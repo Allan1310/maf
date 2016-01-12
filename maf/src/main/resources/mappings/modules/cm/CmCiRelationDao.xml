@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.cm.dao.CmCiRelationDao">
+    
+	<sql id="cmCiRelationColumns">
+		a.id AS "id",
+		a.ci_version AS "ciVersion",
+		a.ci_id AS "ciInstance.id",
+		a.relation_ci_id AS "reCiInstance.id",
+		a.relation_type AS "relationType",
+		a.status AS "status",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="cmCiRelationJoins">
+	</sql>
+    
+	<select id="get" resultType="CmCiRelation">
+		SELECT 
+			<include refid="cmCiRelationColumns"/>
+			,b.ci_name AS "ciInstance.ciName"
+			,b.ci_Number AS "ciInstance.ciNumber"
+			,c.ci_name AS "reCiInstance.ciName"
+			,c.ci_Number AS "reCiInstance.ciNumber"
+			,d.icon_file AS "ciInstance.cmGraphIcon.iconFile"
+			,e.icon_file AS "reCiInstance.cmGraphIcon.iconFile"
+		FROM cm_ci_relation a
+		<include refid="cmCiRelationJoins"/>
+		left join cm_ci_instance b on b.id = a.ci_id
+		left join cm_ci_instance c on c.id = a.relation_ci_id
+		JOIN cm_graph_icon d on d.id = b.icon_id
+		JOIN cm_graph_icon e on e.id = c.icon_id
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CmCiRelation">
+		SELECT 
+			<include refid="cmCiRelationColumns"/>
+			,b.ci_name AS "ciInstance.ciName"
+			,b.ci_Number AS "ciInstance.ciNumber"
+			,c.ci_name AS "reCiInstance.ciName"
+			,c.ci_Number AS "reCiInstance.ciNumber"
+			,d.icon_file AS "ciInstance.cmGraphIcon.iconFile"
+			,e.icon_file AS "reCiInstance.cmGraphIcon.iconFile"
+		FROM cm_ci_relation a
+		<include refid="cmCiRelationJoins"/>
+		left join cm_ci_instance b on b.id = a.ci_id
+		left join cm_ci_instance c on c.id = a.relation_ci_id
+		JOIN cm_graph_icon d on d.id = b.icon_id
+		JOIN cm_graph_icon e on e.id = c.icon_id
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			and a.ci_id = #{ciInstance.id}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CmCiRelation">
+		SELECT 
+			<include refid="cmCiRelationColumns"/>
+		FROM cm_ci_relation a
+		<include refid="cmCiRelationJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cm_ci_relation(
+			id,
+			ci_version,
+			ci_id,
+			relation_ci_id,
+			relation_type,
+			status,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{ciVersion},
+			#{ciInstance.id},
+			#{reCiInstance.id},
+			#{relationType},
+			#{status},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cm_ci_relation SET 	
+			ci_version = #{ciVersion},
+			ci_id = #{ciInstance.id},
+			relation_ci_id = #{reCiInstance.id},
+			relation_type = #{relationType},
+			status = #{status},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE cm_ci_relation SET 
+			del_flag = '1'
+		WHERE id = #{id}
+	</update>
+	
+	<select id="findListByReid" resultType="CmCiRelation">
+		SELECT 
+			<include refid="cmCiRelationColumns"/>
+			,b.ci_name AS "ciInstance.ciName"
+			,b.ci_Number AS "ciInstance.ciNumber"
+			,c.ci_name AS "reCiInstance.ciName"
+			,c.ci_Number AS "reCiInstance.ciNumber"
+			,d.icon_file AS "ciInstance.cmGraphIcon.iconFile"
+			,e.icon_file AS "reCiInstance.cmGraphIcon.iconFile"
+		FROM cm_ci_relation a
+		<include refid="cmCiRelationJoins"/>
+		left join cm_ci_instance b on b.id = a.ci_id
+		left join cm_ci_instance c on c.id = a.relation_ci_id
+		JOIN cm_graph_icon d on d.id = b.icon_id
+		JOIN cm_graph_icon e on e.id = c.icon_id
+		<where>
+			a.del_flag = '0'
+			and a.relation_ci_id = #{reid}
+		</where>
+		ORDER BY a.update_date DESC
+	</select>
+	
+</mapper>

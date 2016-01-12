@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.cm.dao.CmCiPropertyHiDao">
+    
+	<sql id="cmCiPropertyHiColumns">
+		a.id AS "id",
+		a.ci_id AS "ciId",
+		a.ci_version AS "ciVersion",
+		a.property_id AS "property.id",
+		a.property_value AS "propertyValue",
+		a.property_update_value AS "propertyUpdateValue",
+		a.handle AS "handle",
+		a.status AS "status",
+		a.handle_status AS "handleStatus",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="cmCiPropertyHiJoins">
+	</sql>
+    
+	<select id="get" resultType="CmCiPropertyHi">
+		SELECT 
+			<include refid="cmCiPropertyHiColumns"/>
+		FROM cm_ci_property_hi a
+		<include refid="cmCiPropertyHiJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CmCiPropertyHi">
+		SELECT 
+			<include refid="cmCiPropertyHiColumns"/>
+		FROM cm_ci_property_hi a
+		<include refid="cmCiPropertyHiJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CmCiPropertyHi">
+		SELECT 
+			<include refid="cmCiPropertyHiColumns"/>
+		FROM cm_ci_property_hi a
+		<include refid="cmCiPropertyHiJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cm_ci_property_hi(
+			id,
+			ci_id,
+			ci_version,
+			property_id,
+			property_value,
+			property_update_value,
+			handle,
+			status,
+			handle_status,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{ciId},
+			#{ciVersion},
+			#{propertyId},
+			#{propertyValue},
+			#{propertyUpdateValue},
+			#{handle},
+			#{status},
+			#{handleStatus},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cm_ci_property_hi SET 	
+			ci_id = #{ciId},
+			ci_version = #{ciVersion},
+			property_id = #{propertyId},
+			property_value = #{propertyValue},
+			property_update_value = #{propertyUpdateValue},
+			handle = #{handle},
+			status = #{status},
+			handle_status = #{handleStatus},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE cm_ci_property_hi SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	<select id="findEntityHiByCiId" resultType="CmCiProperty">
+		SELECT 
+			<include refid="cmCiPropertyHiColumns"/>
+			,b.id AS "property.id"
+			,b.property_name AS "property.propertyName",
+			b.data_type AS "property.dataType",
+			b.property_Type AS "property.propertyType",
+			b.ext1 AS "property.ext1",
+			b.ext2 AS "property.ext2"
+		FROM cm_ci_property_hi a
+		left join cm_property_manage b on a.property_id = b.id
+		WHERE a.ci_id = #{ciId}
+		AND a.ci_version = #{version}
+		ORDER BY b.sort ASC
+	</select>
+	
+</mapper>

@@ -1,0 +1,1 @@
+INSERT INTO `sys_menu` VALUES ('rm_m12', 'rm_m2', '0,1,rm_m1,rm_m2,', '门禁卡管理', 120, '/rm/rmVsAccessCards/list', '', '', '1', 'rm:rmVsAccessCards:view,rm:rmVsAccessCards:edit', '1', '2015-4-14 21:06:28', '1', '2015-4-14 21:07:54', '', '0');

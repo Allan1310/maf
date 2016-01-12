@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.cm.dao.CmPropertyManageDao">
+    
+	<sql id="cmPropertyManageColumns">
+		a.id AS "id",
+		a.property_number AS "propertyNumber",
+		a.property_name AS "propertyName",
+		a.property_desc AS "propertyDesc",
+		a.property_type AS "propertyType",
+		a.data_type AS "dataType",
+		a.is_null AS "isNull",
+		a.status AS "status",
+		a.ext1 AS "ext1",
+		a.ext2 AS "ext2",
+		a.sort AS "sort",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="cmPropertyManageJoins">
+	</sql>
+    
+	<select id="get" resultType="CmPropertyManage">
+		SELECT 
+			<include refid="cmPropertyManageColumns"/>
+		FROM cm_property_manage a
+		<include refid="cmPropertyManageJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CmPropertyManage">
+		SELECT 
+			<include refid="cmPropertyManageColumns"/>
+		FROM cm_property_manage a
+		<include refid="cmPropertyManageJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		<if test="propertyName != null and propertyName != ''">
+			AND a.property_name LIKE 
+				<if test="dbName == 'oracle'">'%'||#{propertyName}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{propertyName}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{propertyName},'%')</if>
+		</if>
+		<if test="propertyType != null and propertyType != ''">
+			AND a.property_type = #{propertyType}
+		</if>
+		<if test="status != null and status != ''">
+			AND a.status = #{status}
+		</if>
+		<if test="dataType != null and dataType != ''">
+			AND a.data_type = #{dataType}
+		</if>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CmPropertyManage">
+		SELECT 
+			<include refid="cmPropertyManageColumns"/>
+		FROM cm_property_manage a
+		<include refid="cmPropertyManageJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cm_property_manage(
+			id,
+			property_number,
+			property_name,
+			property_desc,
+			property_type,
+			data_type,
+			is_null,
+			status,
+			ext1,
+			ext2,
+			sort,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{propertyNumber},
+			#{propertyName},
+			#{propertyDesc},
+			#{propertyType},
+			#{dataType},
+			#{isNull},
+			#{status},
+			#{ext1},
+			#{ext2},
+			#{sort},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cm_property_manage SET 	
+			property_number = #{propertyNumber},
+			property_name = #{propertyName},
+			property_desc = #{propertyDesc},
+			property_type = #{propertyType},
+			data_type = #{dataType},
+			is_null = #{isNull},
+			status = #{status},
+			ext1 = #{ext1},
+			ext2 = #{ext2},
+			sort = #{sort},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE cm_property_manage SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	<select id="findPropertyByName" parameterType="Map" resultType="CmPropertyManage">
+		SELECT 
+			<include refid="cmPropertyManageColumns"/>
+		FROM cm_property_manage a
+		<include refid="cmPropertyManageJoins"/>
+		WHERE a.property_name = #{propertyName}
+		<if test="propertyType != null and propertyType != ''">
+			AND a.property_type = #{propertyType}
+		</if>
+		<if test="propertyType != null and propertyType != '' and propertyType == 'ZYSX'">
+			AND a.data_type = #{dataType}
+		</if>
+		AND a.del_flag = '0'
+	</select>
+	
+	<select id="findPropertyByType" resultType="CmPropertyManage">
+		SELECT 
+			<include refid="cmPropertyManageColumns"/>
+		FROM cm_property_manage a
+		<include refid="cmPropertyManageJoins"/>
+		WHERE a.del_flag = '0'
+		AND a.status='0'
+		AND a.property_type = #{propertyType}
+		ORDER BY sort ASC
+	</select>
+	
+	<select id="findListByName" resultType="CmPropertyManage">
+		SELECT 
+			<include refid="cmPropertyManageColumns"/>
+		FROM cm_property_manage a
+		<include refid="cmPropertyManageJoins"/>
+		WHERE a.property_name = #{propertyName}
+	</select>
+	
+</mapper>

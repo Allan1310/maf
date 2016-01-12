@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.sys.dao.SetWeekdayDao">
+    
+	<sql id="setWeekdayColumns">
+		a.id AS "id",
+		a.day AS "day",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="setWeekdayJoins">
+	</sql>
+    
+	<select id="get" resultType="SetWeekday">
+		SELECT 
+			<include refid="setWeekdayColumns"/>
+		FROM sys_set_weekday a
+		<include refid="setWeekdayJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findDay" resultType="SetWeekday">
+		SELECT 
+			<include refid="setWeekdayColumns"/>
+		FROM sys_set_weekday a
+		<include refid="setWeekdayJoins"/>
+		WHERE a.day = #{day} and a.del_flag = '0'
+	</select>
+	
+	<select id="findList" resultType="SetWeekday">
+		SELECT 
+			<include refid="setWeekdayColumns"/>
+		FROM sys_set_weekday a
+		<include refid="setWeekdayJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="day != null and day != ''">
+				and a.day = #{day}
+			</if>
+		</where>
+		ORDER BY day DESC
+		<!-- <choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose> -->
+	</select>
+	
+	<select id="findAllList" resultType="SetWeekday">
+		SELECT 
+			<include refid="setWeekdayColumns"/>
+		FROM sys_set_weekday a
+		<include refid="setWeekdayJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sys_set_weekday(
+			id,
+			day,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{day},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sys_set_weekday SET 	
+			day = #{day},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE sys_set_weekday SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

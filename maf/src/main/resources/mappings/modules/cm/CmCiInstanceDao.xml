@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.allinfnt.idc.modules.cm.dao.CmCiInstanceDao">
+    
+	<sql id="cmCiInstanceColumns">
+		a.id AS "id",
+		a.ci_name AS "ciName",
+		a.ci_number AS "ciNumber",
+		a.ci_version AS "ciVersion",
+		a.group_id AS "cmCiGroup.id",
+		a.ci_status_a AS "ciStatusA",
+		a.ci_status_b AS "ciStatusB",
+		a.status AS "status",
+		a.icon_id AS "cmGraphIcon.id",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.ext1 AS "ext1",
+		a.ext2 AS "ext2"
+	</sql>
+	<sql id="cmCiGroupColumns">
+		,
+		b.group_name AS "cmCiGroup.groupName"
+	</sql>
+	
+	<sql id="cmCiInstanceJoins">
+	</sql>
+	<sql id="userJoins">
+		JOIN sys_user u ON u.id = a.create_by
+		JOIN sys_office o ON o.id = u.office_id
+	</sql>
+	<sql id="cmCiGroupLeftJoin">
+		left join cm_ci_group b on a.group_id = b.id
+	</sql>
+    
+	<select id="get" resultType="CmCiInstance">
+		SELECT 
+			<include refid="cmCiInstanceColumns"/>
+			,b.group_name AS "cmCiGroup.groupName"
+			,c.icon_file AS "cmGraphIcon.iconFile"
+			,c.icon_name AS "cmGraphIcon.iconName"
+			,u.name AS "createBy.name"
+		FROM cm_ci_instance a
+		<include refid="cmCiGroupLeftJoin"/>
+		JOIN sys_user u ON u.id = a.create_by
+		JOIN cm_graph_icon c on c.id = a.icon_id
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CmCiInstance">
+		SELECT 
+			<include refid="cmCiInstanceColumns"/>
+			<include refid="cmCiGroupColumns"/>
+			,c.icon_file AS "cmGraphIcon.iconFile"
+			,c.icon_name AS "cmGraphIcon.iconName"
+			,u.name AS "createBy.name"
+		FROM cm_ci_instance a
+		<include refid="cmCiGroupLeftJoin"/>
+		<include refid="userJoins"/>
+		JOIN cm_graph_icon c on c.id = a.icon_id
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			AND a.status != '4'
+		</where>
+		<if test="ciName != null and ciName != ''">
+			AND a.ci_name Like
+				<if test="dbName == 'mssql'">'%'+#{ciName}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{ciName},'%')</if>
+		</if>	
+		<if test="ciStatusA != null and ciStatusA != ''">
+			AND a.ci_status_a = #{ciStatusA}
+		</if>
+		<if test="ciStatusB != null and ciStatusB != ''">
+			AND a.ci_status_b = #{ciStatusB}
+		</if>
+		<if test="status != null and status != ''">
+			AND a.status = #{status}
+		</if>
+		<if test="cmCiGroup != null and cmCiGroup != ''">
+			<if test="cmCiGroup.id !=''">
+				AND a.group_id = #{cmCiGroup.id}
+			</if>
+		</if>
+		<if test="createBy != null and createBy != ''">
+			<if test="createBy.id !=null  and createBy.id !='' ">
+				AND a.create_by = #{createBy.id}
+				</if>
+		</if>
+		${sqlMap.dsf}
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CmCiInstance">
+		SELECT 
+			<include refid="cmCiInstanceColumns"/>
+		FROM cm_ci_instance a
+		<include refid="cmCiInstanceJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO cm_ci_instance(
+			id,
+			ci_name,
+			ci_number,
+			ci_version,
+			group_id,
+			ci_status_a,
+			ci_status_b,
+			status,
+			icon_id ,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			ext1,
+			ext2
+		) VALUES (
+			#{id},
+			#{ciName},
+			#{ciNumber},
+			#{ciVersion},
+			#{cmCiGroup.id},
+			#{ciStatusA},
+			#{ciStatusB},
+			#{status},
+			#{cmGraphIcon.id},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{ext1},
+			#{ext2}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cm_ci_instance SET 	
+			ci_name = #{ciName},
+			ci_number = #{ciNumber},
+			ci_version = #{ciVersion},
+			group_id = #{cmCiGroup.id},
+			ci_status_a = #{ciStatusA},
+			ci_status_b = #{ciStatusB},
+			status = #{status},
+			icon_id = #{cmGraphIcon.id},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			ext1 = #{ext1},
+			ext2 = #{ext2}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE cm_ci_instance SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	<select id="findListByParam" resultType="CmCiInstance">
+		SELECT 
+			<include refid="cmCiInstanceColumns"/>
+			
+		FROM cm_ci_instance a
+		<include refid="cmCiGroupLeftJoin"/>
+		
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<if test="ciName != null and ciName != ''">
+			AND a.ci_name Like
+				<if test="dbName == 'oracle'">'%'||#{ciName}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{ciName}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{ciName},'%')</if>
+		</if>	
+		<if test="ciStatusA != null and ciStatusA != ''">
+			AND a.ci_status_a = #{ciStatusA}
+		</if>
+		<if test="ciStatusB != null and ciStatusB != ''">
+			AND a.ci_status_b = #{ciStatusB}
+		</if>
+		<if test="cmCiGroup != null and cmCiGroup != ''">
+			AND a.group_id = #{cmCiGroup.id}
+		</if>	
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findPageIsModel" resultType="CmCiInstance">
+		SELECT 
+			<include refid="cmCiInstanceColumns"/>
+			<include refid="cmCiGroupColumns"/>
+		FROM cm_ci_instance a
+		<include refid="cmCiGroupLeftJoin"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} AND a.status = '4'
+		</where>
+		<if test="ciName != null and ciName != ''">
+			AND a.ci_name Like
+				<if test="dbName == 'oracle'">'%'||#{ciName}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{ciName}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{ciName},'%')</if>
+		</if>	
+		<if test="cmCiGroup != null and cmCiGroup.id != ''">
+			AND a.group_id = #{cmCiGroup.id}
+		</if>	
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<update id="updateStatusById">
+		UPDATE cm_ci_instance SET 
+			status = #{status}
+		WHERE id = #{id}
+	</update>
+	
+	<insert id="saveInstanceHi">
+		INSERT into cm_ci_instance_hi  
+		select * from cm_ci_instance 
+		where id = #{id}
+	</insert>
+	
+	<select id="findEntityByGroupId" resultType="CmCiInstance">
+		SELECT 
+			<include refid="cmCiInstanceColumns"/>
+		FROM cm_ci_instance a
+		<include refid="cmCiInstanceJoins"/>
+		<where>
+			a.del_flag = '0' 
+			and a.status='1'
+			and a.group_id = #{groupId}
+		</where>
+	</select>
+</mapper>
